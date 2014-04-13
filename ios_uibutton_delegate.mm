@@ -28,7 +28,8 @@ IOS::UIButtonDelegate::UIButtonDelegate(UIButton * iosView)
 {
 }
 
-bool IOS::UIButtonDelegate::setElementProperty(UI::Element *, const std::string & name, const std::string & val)
+bool IOS::UIButtonDelegate::setElementProperty(UI::Element * element, const std::string & name,
+	const std::string & val)
 {
 	UIButton * button = (UIButton *)m_View;
 
@@ -45,5 +46,5 @@ bool IOS::UIButtonDelegate::setElementProperty(UI::Element *, const std::string 
 		return true;
 	}
 
-	return false;
+	return UIViewDelegate::setElementProperty(element, name, val);
 }

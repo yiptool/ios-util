@@ -28,7 +28,8 @@ IOS::UIImageViewDelegate::UIImageViewDelegate(UIImageView * iosView)
 {
 }
 
-bool IOS::UIImageViewDelegate::setElementProperty(UI::Element *, const std::string & name, const std::string & val)
+bool IOS::UIImageViewDelegate::setElementProperty(UI::Element * element,
+	const std::string & name, const std::string & val)
 {
 	if (name == "image")
 	{
@@ -36,5 +37,5 @@ bool IOS::UIImageViewDelegate::setElementProperty(UI::Element *, const std::stri
 		return true;
 	}
 
-	return false;
+	return UIViewDelegate::setElementProperty(element, name, val);
 }
