@@ -32,6 +32,8 @@ IOS::UILabelDelegate::UILabelDelegate(UILabel * iosView)
 	  m_FontFamily(nil),
 	  m_FontSize(16.0f)
 {
+	UILabel * label = (UILabel *)m_View;
+	label.backgroundColor = [UIColor clearColor];
 }
 
 IOS::UILabelDelegate::~UILabelDelegate()
@@ -46,23 +48,43 @@ bool IOS::UILabelDelegate::setElementProperty(UI::Element * element, const std::
 
 	if (name == "text")
 	{
-		NSString * text = [NSString stringWithUTF8String:val.c_str()];
-		label.text = text;
+		label.text = [NSString stringWithUTF8String:val.c_str()];
 		return true;
 	}
-	else if (name == "font-family")
+	else if (name == "textColor")
+	{
+		label.textColor = iosColorFromName(val);
+		return true;
+	}
+	else if (name == "fitText")
+	{
+		label.adjustsFontSizeToFitWidth = iosBoolFromName(val);
+		return true;
+	}
+	else if (name == "minimumScaleFactor")
+	{
+		const char * p = val.c_str();
+		char * end = nullptr;
+		float factor = static_cast<float>(p_strtod(p, &end));
+		if (*end != 0)
+			throw std::runtime_error(fmt() << "invalid value '" << val << "' for the 'minimumScaleFactor' attribute.");
+		label.minimumScaleFactor = factor;
+		return true;
+	}
+	else if (name == "fontFamily")
 	{
 		[m_FontFamily release];
 		m_FontFamily = [[NSString stringWithUTF8String:val.c_str()] retain];
 		return true;
 	}
-	else if (name == "font-size")
+	else if (name == "fontSize")
 	{
 		const char * p = val.c_str();
 		char * end = nullptr;
-		m_FontSize = static_cast<float>(p_strtod(p, &end));
+		float size = static_cast<float>(p_strtod(p, &end));
 		if (*end != 0)
-			throw std::runtime_error(fmt() << "invalid value '" << val << "' for the 'font-size' attribute.");
+			throw std::runtime_error(fmt() << "invalid value '" << val << "' for the 'fontSize' attribute.");
+		m_FontSize = size;
 		return true;
 	}
 

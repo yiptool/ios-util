@@ -37,6 +37,22 @@ extern "C" {
 #endif
 
 /**
+ * Converts given text string ("yes" or "no") into BOOL.
+ * @param str Text String.
+ * @return Corresponding BOOL value.
+ * @throw std::runtime_error If *str* does not contain either "yes" or "no".
+ */
+BOOL iosBoolFromName(const std::string & str);
+
+/**
+ * Converts given text string into UIColor.
+ * @param str Text string.
+ * @return Instance of UIColor.
+ * @throw std::runtime_error If *str* contains an invalid color name.
+ */
+UIColor * iosColorFromName(const std::string & str);
+
+/**
  * Loads font as close to the given pixel size, as possible.
  * @param fontName Name of the font.
  * @param sizeInPixels Size of the font in pixels.

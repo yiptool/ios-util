@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 //
 #import "ios_uiview_delegate.h"
+#import "ios_util.h"
 
 IOS::UIViewDelegate::UIViewDelegate(UIView * iosView)
 	: m_View([iosView retain])
@@ -41,8 +42,14 @@ glm::vec2 IOS::UIViewDelegate::measureElementSize(const UI::Element *, const glm
 	return glm::vec2(size.width, size.height);
 }
 
-bool IOS::UIViewDelegate::setElementProperty(UI::Element *, const std::string &, const std::string &)
+bool IOS::UIViewDelegate::setElementProperty(UI::Element *, const std::string & name, const std::string & val)
 {
+	if (name == "backgroundColor")
+	{
+		m_View.backgroundColor = iosColorFromName(val);
+		return true;
+	}
+
 	return false;
 }
 
