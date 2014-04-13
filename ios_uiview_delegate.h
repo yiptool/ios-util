@@ -39,6 +39,12 @@ namespace IOS
 		~UIViewDelegate();
 
 		/**
+		 * Retrieves pointer to the iOS view.
+		 * @return Pointer to the iOS view.
+		 */
+		inline UIView * view() const { return m_View; }
+
+		/**
 		 * Measures contents of the element for the means of layouting.
 		 * @param element Pointer to the element.
 		 * @param sz Size of the area available to the element.
