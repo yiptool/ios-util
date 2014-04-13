@@ -20,20 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_delegate_factory.h"
 #import "ios_uibutton_delegate.h"
-#import "ios_uiimageview_delegate.h"
-#import "ios_uiview_delegate.h"
-#import <yip-imports/cxx-util/fmt.h>
+#import "ios_util.h"
 
-UI::ElementDelegate * IOS::DelegateFactory::delegateForClass(const std::string & className) const
+IOS::UIButtonDelegate::UIButtonDelegate(UIButton * iosView)
+	: IOS::UIViewDelegate(iosView)
 {
-	if (className == "UIImageView")
-		return new IOS::UIImageViewDelegate([[[UIImageView alloc] initWithImage:nil] autorelease]);
-	else if (className == "UIButton")
-		return new IOS::UIButtonDelegate([UIButton buttonWithType:UIButtonTypeCustom]);
-	else if (className == "UIView")
-		return new IOS::UIViewDelegate([[[UIView alloc] initWithFrame:CGRectZero] autorelease]);
+}
 
-	throw std::runtime_error(fmt() << "invalid UI element '" << className << "'.");
+bool IOS::UIButtonDelegate::setElementProperty(UI::Element *, const std::string & name, const std::string & val)
+{
+	UIButton * button = (UIButton *)m_View;
+
+	if (name == "title")
+	{
+		NSString * title = [NSString stringWithUTF8String:val.c_str()];
+		[button setTitle:title forState:UIControlStateNormal];
+		return true;
+	}
+	else if (name == "background")
+	{
+		UIImage * image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
+		[button setBackgroundImage:image forState:UIControlStateNormal];
+		return true;
+	}
+
+	return false;
 }
