@@ -20,26 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import <UIKit/UIKit.h>
+#import "ios_delegate_factory.h"
+#import "ios_uiimageview_delegate.h"
+#import "ios_uiview_delegate.h"
+#import <yip-imports/cxx-util/fmt.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+UI::ElementDelegate * IOS::DelegateFactory::delegateForClass(const std::string & className) const
+{
+	if (className == "UIImageView")
+		return new IOS::UIImageViewDelegate([[[UIImageView alloc] initWithImage:nil] autorelease]);
+	else if (className == "UIView")
+		return new IOS::UIViewDelegate([[[UIView alloc] initWithFrame:CGRectZero] autorelease]);
 
-/**
- * Determines full path to the specified resource inside the application bundle.
- * @param resource Relative path to the resource.
- * @return Full path to the result.
- */
-NSString * iosPathForResource(NSString * resource);
-
-/**
- * Loads the specified image from resource file.
- * @param resource Relative path to the resource.
- * @return Instance of *UIImage*.
- */
-UIImage * iosImageFromResource(NSString * resource);
-
-#ifdef __cplusplus
+	throw std::runtime_error(fmt() << "invalid UI element '" << className << "'.");
 }
-#endif

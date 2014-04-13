@@ -20,26 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
+#import <yip-imports/ui_delegate_factory.h>
 #import <UIKit/UIKit.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
- * Determines full path to the specified resource inside the application bundle.
- * @param resource Relative path to the resource.
- * @return Full path to the result.
- */
-NSString * iosPathForResource(NSString * resource);
-
-/**
- * Loads the specified image from resource file.
- * @param resource Relative path to the resource.
- * @return Instance of *UIImage*.
- */
-UIImage * iosImageFromResource(NSString * resource);
-
-#ifdef __cplusplus
+namespace IOS
+{
+	/** Factory for iOS UI elements' delegates. */
+	class DelegateFactory : public UI::DelegateFactory
+	{
+		UI::ElementDelegate * delegateForClass(const std::string & className) const override final;
+	};
 }
-#endif

@@ -20,26 +20,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import <UIKit/UIKit.h>
+#import "ios_uiview_delegate.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
- * Determines full path to the specified resource inside the application bundle.
- * @param resource Relative path to the resource.
- * @return Full path to the result.
- */
-NSString * iosPathForResource(NSString * resource);
-
-/**
- * Loads the specified image from resource file.
- * @param resource Relative path to the resource.
- * @return Instance of *UIImage*.
- */
-UIImage * iosImageFromResource(NSString * resource);
-
-#ifdef __cplusplus
+IOS::UIViewDelegate::UIViewDelegate(UIView * iosView)
+	: m_View([iosView retain])
+{
 }
-#endif
+
+IOS::UIViewDelegate::~UIViewDelegate()
+{
+	[m_View removeFromSuperview];
+	[m_View release];
+}
+
+glm::vec2 IOS::UIViewDelegate::measureElementSize(const UI::Element *, const glm::vec2 & sz,
+	UI::SizeConstraint, UI::SizeConstraint vert)
+{
+	CGSize size = CGSizeMake(sz.x, sz.y);
+	size = [m_View sizeThatFits:size];
+	return glm::vec2(size.width, size.height);
+}
+
+bool IOS::UIViewDelegate::setElementProperty(UI::Element *, const std::string &, const std::string &)
+{
+	return false;
+}
+
+void IOS::UIViewDelegate::onElementDestroyed(UI::Element *)
+{
+	delete this;
+}
+
+void IOS::UIViewDelegate::onElementParentChanged(UI::Element *, UI::Element *, UI::Element * newP)
+{
+	[m_View removeFromSuperview];
+
+	if (!newP)
+		return;
+
+	IOS::UIViewDelegate * delegate = dynamic_cast<IOS::UIViewDelegate *>(newP->delegate);
+	if (delegate)
+		[delegate->m_View addSubview:m_View];
+}
+
+void IOS::UIViewDelegate::onElementLayoutChanged(UI::Element *, const glm::vec2 & pos, const glm::vec2 & sz)
+{
+	m_View.frame = CGRectMake(pos.x, pos.y, sz.x, sz.y);
+}

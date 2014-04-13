@@ -20,26 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
+#import "ios_uiview_delegate.h"
 #import <UIKit/UIKit.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace IOS
+{
+	/** Delegate for *UIImageView*. */
+	class UIImageViewDelegate : public UIViewDelegate
+	{
+	public:
+		/**
+		 * Constructor.
+		 * @param iosView Pointer to the instance of *UIImageView*.
+		 */
+		UIImageViewDelegate(UIImageView * iosView);
 
-/**
- * Determines full path to the specified resource inside the application bundle.
- * @param resource Relative path to the resource.
- * @return Full path to the result.
- */
-NSString * iosPathForResource(NSString * resource);
+		/**
+		 * Sets property of the image view.
+		 * @param element Pointer to the element.
+		 * @param name Name of the property.
+		 * @param val Value of the property.
+		 * @return *true* on success or *false* if element does not have such property.
+		 */
+		bool setElementProperty(UI::Element * element, const std::string & name, const std::string & val) override;
 
-/**
- * Loads the specified image from resource file.
- * @param resource Relative path to the resource.
- * @return Instance of *UIImage*.
- */
-UIImage * iosImageFromResource(NSString * resource);
-
-#ifdef __cplusplus
+		UIImageViewDelegate(const UIImageViewDelegate &) = delete;
+		UIImageViewDelegate & operator=(const UIImageViewDelegate &) = delete;
+	};
 }
-#endif

@@ -20,26 +20,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import <UIKit/UIKit.h>
+#import "ios_uiimageview_delegate.h"
+#import "ios_util.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
- * Determines full path to the specified resource inside the application bundle.
- * @param resource Relative path to the resource.
- * @return Full path to the result.
- */
-NSString * iosPathForResource(NSString * resource);
-
-/**
- * Loads the specified image from resource file.
- * @param resource Relative path to the resource.
- * @return Instance of *UIImage*.
- */
-UIImage * iosImageFromResource(NSString * resource);
-
-#ifdef __cplusplus
+IOS::UIImageViewDelegate::UIImageViewDelegate(UIImageView * iosView)
+	: IOS::UIViewDelegate(iosView)
+{
 }
-#endif
+
+bool IOS::UIImageViewDelegate::setElementProperty(UI::Element *, const std::string & name, const std::string & val)
+{
+	if (name == "image")
+	{
+		((UIImageView *)m_View).image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
+		return true;
+	}
+
+	return false;
+}

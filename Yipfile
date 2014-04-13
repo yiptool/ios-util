@@ -24,10 +24,16 @@ import ui-helpers
 
 public_headers
 {
+	ios_delegate_factory.h
+	ios_uiview_delegate.h
+	ios_uiimageview_delegate.h
 	ios_util.h
 }
 
 sources:ios
 {
+	ios_delegate_factory.mm
+	ios_uiview_delegate.mm
+	ios_uiimageview_delegate.mm
 	ios_util.mm
 }

@@ -22,14 +22,14 @@
 //
 #import "ios_util.h"
 
-NSString * pathForResource(NSString * resource)
+NSString * iosPathForResource(NSString * resource)
 {
 	return [NSString stringWithFormat:@"%@/%@", [NSBundle mainBundle].resourcePath, resource];
 }
 
-UIImage * imageFromResource(NSString * resource)
+UIImage * iosImageFromResource(NSString * resource)
 {
-	NSString * path = pathForResource(resource);
+	NSString * path = iosPathForResource(resource);
 	NSData * data = [NSData dataWithContentsOfFile:path];
 
 	CGFloat scale = [[UIScreen mainScreen] scale];
