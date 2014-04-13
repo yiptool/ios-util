@@ -87,6 +87,22 @@ bool IOS::UILabelDelegate::setElementProperty(UI::Element * element, const std::
 		m_FontSize = size;
 		return true;
 	}
+	else if (name == "textAlign")
+	{
+		if (val == "left")
+			label.textAlignment = NSTextAlignmentLeft;
+		else if (val == "center")
+			label.textAlignment = NSTextAlignmentCenter;
+		else if (val == "right")
+			label.textAlignment = NSTextAlignmentRight;
+		else if (val == "justified")
+			label.textAlignment = NSTextAlignmentJustified;
+		else if (val == "natural")
+			label.textAlignment = NSTextAlignmentNatural;
+		else
+			throw std::runtime_error(fmt() << "invalid text alignment '" << val << "'.");
+		return true;
+	}
 
 	return UIViewDelegate::setElementProperty(element, name, val);
 }
