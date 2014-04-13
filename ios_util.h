@@ -25,6 +25,9 @@
 #import <memory>
 #import <UIKit/UIKit.h>
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// C
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -35,6 +38,22 @@ extern "C" {
  * @return Full path to the result.
  */
 NSString * iosPathForResource(NSString * resource);
+
+/**
+ * Loads the specified image from resource file.
+ * @param resource Relative path to the resource.
+ * @return Instance of *UIImage*.
+ */
+UIImage * iosImageFromResource(NSString * resource);
+
+#ifdef __cplusplus
+}
+#endif
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// C++
+
+#ifdef __cplusplus
 
 /**
  * Loads the specified resource into memory.
@@ -50,13 +69,4 @@ std::string iosLoadResource(NSString * resource);
  */
 std::shared_ptr<TiXmlDocument> iosXmlFromResource(NSString * resource);
 
-/**
- * Loads the specified image from resource file.
- * @param resource Relative path to the resource.
- * @return Instance of *UIImage*.
- */
-UIImage * iosImageFromResource(NSString * resource);
-
-#ifdef __cplusplus
-}
 #endif

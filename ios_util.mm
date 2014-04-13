@@ -28,6 +28,17 @@ NSString * iosPathForResource(NSString * resource)
 	return [NSString stringWithFormat:@"%@/%@", [NSBundle mainBundle].resourcePath, resource];
 }
 
+UIImage * iosImageFromResource(NSString * resource)
+{
+	NSString * path = iosPathForResource(resource);
+	NSData * data = [NSData dataWithContentsOfFile:path];
+
+	CGFloat scale = [[UIScreen mainScreen] scale];
+	UIImage * image = [[[UIImage alloc] initWithData:data scale:scale] autorelease];
+
+	return image;
+}
+
 std::string iosLoadResource(NSString * resource)
 {
 	NSString * path = iosPathForResource(resource);
@@ -41,27 +52,16 @@ std::shared_ptr<TiXmlDocument> iosXmlFromResource(NSString * resource)
 	NSData * data = [NSData dataWithContentsOfFile:path];
 
 	const char * ptr = reinterpret_cast<const char *>(data.bytes);
-	size_t len = static_cast<size_t>(data.length());
+	size_t len = static_cast<size_t>(data.length);
 
 	std::shared_ptr<TiXmlDocument> xml = std::make_shared<TiXmlDocument>([resource UTF8String]);
 	if (!xml->LoadBuffer(const_cast<char *>(ptr), len))
 	{
 		std::stringstream ss;
-		ss << "error in '" << doc.ValueStr() << "' at row " << doc.ErrorRow() << ", column " << doc.ErrorCol()
-			<< ": " << doc.ErrorDesc();
+		ss << "error in '" << xml->ValueStr() << "' at row " << xml->ErrorRow() << ", column " << xml->ErrorCol()
+			<< ": " << xml->ErrorDesc();
 		throw std::runtime_error(ss.str());
 	}
 
 	return xml;
-}
-
-UIImage * iosImageFromResource(NSString * resource)
-{
-	NSString * path = iosPathForResource(resource);
-	NSData * data = [NSData dataWithContentsOfFile:path];
-
-	CGFloat scale = [[UIScreen mainScreen] scale];
-	UIImage * image = [[[UIImage alloc] initWithData:data scale:scale] autorelease];
-
-	return image;
 }
