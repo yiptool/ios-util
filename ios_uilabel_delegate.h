@@ -20,23 +20,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_delegate_factory.h"
-#import "ios_uibutton_delegate.h"
-#import "ios_uilabel_delegate.h"
-#import "ios_uiimageview_delegate.h"
 #import "ios_uiview_delegate.h"
-#import <yip-imports/cxx-util/fmt.h>
+#import <UIKit/UIKit.h>
 
-UI::ElementDelegate * IOS::DelegateFactory::delegateForClass(const std::string & className) const
+namespace IOS
 {
-	if (className == "UIImageView")
-		return new IOS::UIImageViewDelegate([[[UIImageView alloc] initWithImage:nil] autorelease]);
-	else if (className == "UIButton")
-		return new IOS::UIButtonDelegate([UIButton buttonWithType:UIButtonTypeCustom]);
-	else if (className == "UILabel")
-		return new IOS::UILabelDelegate([[UILabel alloc] initWithFrame:CGRectZero]);
-	else if (className == "UIView")
-		return new IOS::UIViewDelegate([[[UIView alloc] initWithFrame:CGRectZero] autorelease]);
+	/** Delegate for *UILabel*. */
+	class UILabelDelegate : public UIViewDelegate
+	{
+	public:
+		/**
+		 * Constructor.
+		 * @param iosView Pointer to the instance of *UILabel*.
+		 */
+		UILabelDelegate(UILabel * iosView);
 
-	throw std::runtime_error(fmt() << "invalid UI element '" << className << "'.");
+		/** Destructor. */
+		~UILabelDelegate();
+
+		/**
+		 * Sets property of the button.
+		 * @param element Pointer to the element.
+		 * @param name Name of the property.
+		 * @param val Value of the property.
+		 * @return *true* on success or *false* if element does not have such property.
+		 */
+		bool setElementProperty(UI::Element * element, const std::string & name, const std::string & val) override;
+
+		/**
+		 * Called when position or size of this element changes.
+		 * @param elem Pointer to the element.
+		 * @param pos New coordinates of the top left corner of this element relative to the parent element.
+		 * @param sz New size of this element.
+		 */
+		void onElementLayoutChanged(UI::Element * elem, const glm::vec2 & pos, const glm::vec2 & sz) override;
+
+	private:
+		NSString * m_FontFamily;
+		float m_FontSize;
+
+		UILabelDelegate(const UILabelDelegate &) = delete;
+		UILabelDelegate & operator=(const UILabelDelegate &) = delete;
+	};
 }

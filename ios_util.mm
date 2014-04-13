@@ -22,7 +22,57 @@
 //
 #import "ios_util.h"
 #import "ios_uiview_delegate.h"
+#import <yip-imports/cxx-util/fmt.h>
 #import <sstream>
+#import <stdexcept>
+
+UIFont * iosGetFont(NSString * fontName, CGFloat sizeInPixels)
+{
+	// Based on code from http://stackoverflow.com/questions/1059101/font-size-in-pixels
+
+	// Lets play around and create a font that falls near the point size needed
+	CGFloat pointStart = sizeInPixels / 4;
+	CGFloat lastHeight = -1;
+	UIFont * lastFont = [UIFont fontWithName:fontName size:0.5f];
+
+	NSMutableDictionary * dictAttrs = [NSMutableDictionary dictionaryWithCapacity:1];
+	NSString * fontCompareString = @"Mgj^";
+
+	for (CGFloat pnt = pointStart; pnt < 1000; pnt += 0.5f)
+	{
+		UIFont * font = [UIFont fontWithName:fontName size:pnt];
+		if (!font)
+			throw std::runtime_error(fmt() << "unable to create font '" << fontName << "'.");
+
+		dictAttrs[NSFontAttributeName] = font;
+		CGSize cs = [fontCompareString sizeWithAttributes:dictAttrs];
+
+		CGFloat fheight = cs.height;
+		if (fheight == sizeInPixels)
+		{
+			// That will be rare but we found it
+			return font;
+		}
+
+		if (fheight > sizeInPixels)
+		{
+			if (!lastFont)
+				return font;
+
+			// Check which one is closer last height or this one and return to the user
+			CGFloat fc1 = fabs(fheight - sizeInPixels);
+			CGFloat fc2 = fabs(lastHeight - sizeInPixels);
+
+			// Return the smallest differential
+			return (fc1 < fc2 ? font : lastFont);
+		}
+
+		lastFont = font;
+		lastHeight = fheight;
+	}
+
+	return nil;
+}
 
 NSString * iosPathForResource(NSString * resource)
 {

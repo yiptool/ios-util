@@ -37,6 +37,14 @@ extern "C" {
 #endif
 
 /**
+ * Loads font as close to the given pixel size, as possible.
+ * @param fontName Name of the font.
+ * @param sizeInPixels Size of the font in pixels.
+ * @return Instance of *UIFont*.
+ */
+UIFont * iosGetFont(NSString * fontName, CGFloat sizeInPixels);
+
+/**
  * Determines full path to the specified resource inside the application bundle.
  * @param resource Relative path to the resource.
  * @return Full path to the result.

@@ -20,14 +20,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE."
 
+import cxx-util
 import ui-helpers
+import strtod
 
 public_headers
 {
 	ios_delegate_factory.h
 	ios_uibutton_delegate.h
-	ios_uiview_delegate.h
 	ios_uiimageview_delegate.h
+	ios_uilabel_delegate.h
+	ios_uiview_delegate.h
 	ios_util.h
 }
 
@@ -35,7 +38,8 @@ sources:ios
 {
 	ios_delegate_factory.mm
 	ios_uibutton_delegate.mm
-	ios_uiview_delegate.mm
 	ios_uiimageview_delegate.mm
+	ios_uilabel_delegate.mm
+	ios_uiview_delegate.mm
 	ios_util.mm
 }
