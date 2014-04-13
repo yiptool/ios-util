@@ -21,10 +21,38 @@
 // THE SOFTWARE.
 //
 #import "ios_util.h"
+#import <sstream>
 
 NSString * iosPathForResource(NSString * resource)
 {
 	return [NSString stringWithFormat:@"%@/%@", [NSBundle mainBundle].resourcePath, resource];
+}
+
+std::string iosLoadResource(NSString * resource)
+{
+	NSString * path = iosPathForResource(resource);
+	NSData * data = [NSData dataWithContentsOfFile:path];
+	return std::string(reinterpret_cast<const char *>(data.bytes), static_cast<size_t>(data.length));
+}
+
+std::shared_ptr<TiXmlDocument> iosXmlFromResource(NSString * resource)
+{
+	NSString * path = iosPathForResource(resource);
+	NSData * data = [NSData dataWithContentsOfFile:path];
+
+	const char * ptr = reinterpret_cast<const char *>(data.bytes);
+	size_t len = static_cast<size_t>(data.length());
+
+	std::shared_ptr<TiXmlDocument> xml = std::make_shared<TiXmlDocument>([resource UTF8String]);
+	if (!xml->LoadBuffer(const_cast<char *>(ptr), len))
+	{
+		std::stringstream ss;
+		ss << "error in '" << doc.ValueStr() << "' at row " << doc.ErrorRow() << ", column " << doc.ErrorCol()
+			<< ": " << doc.ErrorDesc();
+		throw std::runtime_error(ss.str());
+	}
+
+	return xml;
 }
 
 UIImage * iosImageFromResource(NSString * resource)

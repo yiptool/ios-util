@@ -20,6 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
+#import <yip-imports/tinyxml.h>
+#import <string>
+#import <memory>
 #import <UIKit/UIKit.h>
 
 #ifdef __cplusplus
@@ -32,6 +35,20 @@ extern "C" {
  * @return Full path to the result.
  */
 NSString * iosPathForResource(NSString * resource);
+
+/**
+ * Loads the specified resource into memory.
+ * @param resource Relative path to the resource.
+ * @return Resource data.
+ */
+std::string iosLoadResource(NSString * resource);
+
+/**
+ * Loads the specified XML resource into memory.
+ * @param resource Relative path to the resource.
+ * @return XML document for the resource.
+ */
+std::shared_ptr<TiXmlDocument> iosXmlFromResource(NSString * resource);
 
 /**
  * Loads the specified image from resource file.
