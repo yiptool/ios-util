@@ -116,7 +116,7 @@ UIFont * iosGetFont(NSString * fontName, CGFloat sizeInPixels)
 	UIFont * lastFont = [UIFont fontWithName:fontName size:0.5f];
 
 	NSMutableDictionary * dictAttrs = [NSMutableDictionary dictionaryWithCapacity:1];
-	NSString * fontCompareString = @"Mgj^";
+	NSString * fontCompareString = @"Mgj^_|";
 
 	for (CGFloat pnt = pointStart; pnt < 1000; pnt += 0.5f)
 	{
@@ -124,8 +124,14 @@ UIFont * iosGetFont(NSString * fontName, CGFloat sizeInPixels)
 		if (!font)
 			throw std::runtime_error(fmt() << "unable to create font '" << fontName << "'.");
 
-		dictAttrs[NSFontAttributeName] = font;
-		CGSize cs = [fontCompareString sizeWithAttributes:dictAttrs];
+		CGSize cs;
+		if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
+			cs = [fontCompareString sizeWithFont:font];
+		else
+		{
+			dictAttrs[NSFontAttributeName] = font;
+			cs = [fontCompareString sizeWithAttributes:dictAttrs];
+		}
 
 		CGFloat fheight = cs.height;
 		if (fheight == sizeInPixels)
