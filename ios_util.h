@@ -20,10 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
+#import <UIKit/UIKit.h>
+
+#ifdef __cplusplus
 #import <yip-imports/tinyxml.h>
+#import <yip-imports/ui_manager.h>
 #import <string>
 #import <memory>
-#import <UIKit/UIKit.h>
+#endif
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // C
@@ -68,5 +72,13 @@ std::string iosLoadResource(NSString * resource);
  * @return XML document for the resource.
  */
 std::shared_ptr<TiXmlDocument> iosXmlFromResource(NSString * resource);
+
+/**
+ * Retrieves instance of UIView for the specified UI element id.
+ * @param mgr Pointer to the UI manager.
+ * @param elemID ID of the UI element.
+ * @return Pointer to the instance of UIView or *nil* if there is no such UI element.
+ */
+id iosGetViewById(const UI::ManagerPtr & mgr, const std::string & elemID);
 
 #endif

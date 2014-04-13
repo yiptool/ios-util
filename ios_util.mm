@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 //
 #import "ios_util.h"
+#import "ios_uiview_delegate.h"
 #import <sstream>
 
 NSString * iosPathForResource(NSString * resource)
@@ -64,4 +65,17 @@ std::shared_ptr<TiXmlDocument> iosXmlFromResource(NSString * resource)
 	}
 
 	return xml;
+}
+
+id iosGetViewById(const UI::ManagerPtr & mgr, const std::string & elemID)
+{
+	UI::Element * element = mgr->getElementById(elemID);
+	if (!element)
+		return nil;
+
+	IOS::UIViewDelegate * delegate = dynamic_cast<IOS::UIViewDelegate *>(element->delegate);
+	if (!delegate)
+		return nil;
+
+	return delegate->view();
 }
