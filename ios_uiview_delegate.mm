@@ -49,6 +49,11 @@ bool IOS::UIViewDelegate::setElementProperty(UI::Element *, const std::string & 
 		m_View.backgroundColor = iosColorFromName(val);
 		return true;
 	}
+	else if (name == "userInteractionEnabled")
+	{
+		m_View.userInteractionEnabled = iosBoolFromName(val);
+		return true;
+	}
 
 	return false;
 }
