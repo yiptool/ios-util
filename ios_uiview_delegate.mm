@@ -22,6 +22,9 @@
 //
 #import "ios_uiview_delegate.h"
 #import "ios_util.h"
+#import <yip-imports/strtod.h>
+#import <yip-imports/cxx-util/fmt.h>
+#import <stdexcept>
 
 IOS::UIViewDelegate::UIViewDelegate(UIView * iosView)
 	: m_View([iosView retain])
@@ -48,6 +51,16 @@ bool IOS::UIViewDelegate::setElementProperty(UI::Element *, const std::string & 
 	if (name == "backgroundColor")
 	{
 		m_View.backgroundColor = iosColorFromName(val);
+		return true;
+	}
+	else if (name == "alpha")
+	{
+		const char * p = val.c_str();
+		char * end = nullptr;
+		float alpha = static_cast<float>(p_strtod(p, &end));
+		if (*end != 0)
+			throw std::runtime_error(fmt() << "invalid value '" << val << "' for the 'alpha' attribute.");
+		m_View.alpha = alpha;
 		return true;
 	}
 	else if (name == "userInteractionEnabled")
