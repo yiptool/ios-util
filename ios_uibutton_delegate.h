@@ -45,6 +45,14 @@ namespace IOS
 		 */
 		bool setElementProperty(UI::Element * element, const std::string & name, const std::string & val) override;
 
+		/**
+		 * Called when position or size of this element changes.
+		 * @param elem Pointer to the element.
+		 * @param pos New coordinates of the top left corner of this element relative to the parent element.
+		 * @param sz New size of this element.
+		 */
+		void onElementLayoutChanged(UI::Element * elem, const glm::vec2 & pos, const glm::vec2 & sz) override;
+
 	private:
 		ScalableFont m_Font;
 

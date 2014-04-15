@@ -23,6 +23,7 @@
 #import "ios_uilabel_delegate.h"
 #import "ios_uibutton_delegate.h"
 #import "ios_util.h"
+#import <yip-imports/ui_layout.h>
 
 IOS::UIButtonDelegate::UIButtonDelegate(UIButton * iosView)
 	: IOS::UIViewDelegate(iosView)
@@ -65,4 +66,14 @@ bool IOS::UIButtonDelegate::setElementProperty(UI::Element * element, const std:
 		return true;
 
 	return UIViewDelegate::setElementProperty(element, name, val);
+}
+
+void IOS::UIButtonDelegate::onElementLayoutChanged(UI::Element * elem, const glm::vec2 & pos, const glm::vec2 & sz)
+{
+	UIViewDelegate::onElementLayoutChanged(elem, pos, sz);
+
+	float scale = UI::Layout::scaleFactorForElement(elem);
+	UIFont * font = m_Font.getUIFontForScale(scale);
+	if (font)
+		((UIButton *)m_View).titleLabel.font = font;
 }
