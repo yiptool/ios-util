@@ -23,6 +23,7 @@
 #import "ios_uilabel_delegate.h"
 #import "ios_uibutton_delegate.h"
 #import "ios_util.h"
+#import <yip-imports/cxx-util/fmt.h>
 #import <yip-imports/ui_layout.h>
 
 IOS::UIButtonDelegate::UIButtonDelegate(UIButton * iosView)
@@ -58,6 +59,20 @@ bool IOS::UIButtonDelegate::setElementProperty(UI::Element * element, const std:
 	{
 		UIImage * image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
 		[button setBackgroundImage:image forState:UIControlStateNormal];
+		return true;
+	}
+	else if (name == "contentHorizontalAlignment")
+	{
+		if (val == "center")
+			button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+		else if (val == "left")
+			button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+		else if (val == "right")
+			button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+		else if (val == "fill")
+			button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+		else
+			throw std::runtime_error(fmt() << "invalid value for the 'contentHorizontalAlignment' property.");
 		return true;
 	}
 	else if (m_Font.setProperty(name, val))
