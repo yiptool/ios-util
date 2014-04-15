@@ -22,13 +22,39 @@
 //
 #import "ios_action_sheet.h"
 
+@interface BaseView : UIView
+{
+	ActionSheet * sheet;
+}
+@end
+
+@implementation BaseView
+
+-(id)initWithActionSheet:(ActionSheet *)owner
+{
+	self = [super initWithFrame:CGRectZero];
+	if (self)
+		sheet = owner;
+	return self;
+}
+
+-(void)layoutSubviews
+{
+	[super layoutSubviews];
+	[sheet layoutSubviews];
+}
+
+@end
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 @implementation ActionSheet
 
 @synthesize onDismiss;
 
 -(id)init
 {
-	self = [super initWithFrame:CGRectZero];
+	self = [super init];
 	if (self)
 	{
 		overlayView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -38,7 +64,7 @@
 		sheetView.translatesAutoresizingMaskIntoConstraints = NO;
 		sheetView.backgroundColor = [UIColor whiteColor];
 
-		baseView = [[UIView alloc] initWithFrame:CGRectZero];
+		baseView = [[BaseView alloc] initWithActionSheet:self];
 		baseView.backgroundColor = [UIColor clearColor];
 		[baseView addSubview:overlayView];
 		[baseView addSubview:sheetView];
@@ -53,6 +79,7 @@
 	[overlayView release];
 	[sheetView removeFromSuperview];
 	[sheetView release];
+	[baseView.superview removeObserver:self forKeyPath:@"bounds" context:nil];
 	[baseView removeFromSuperview];
 	[baseView release];
 	[super dealloc];
@@ -100,8 +127,11 @@
 
 -(void)presentInView:(UIView *)view
 {
+	[baseView.superview removeObserver:self forKeyPath:@"bounds" context:nil];
 	[baseView removeFromSuperview];
+
 	[view addSubview:baseView];
+	[view addObserver:self forKeyPath:@"bounds" options:0 context:nil];
 
 	CGRect bounds = view.bounds;
 	baseView.frame = bounds;
@@ -112,6 +142,7 @@
 	__block CGRect contentsBounds = CGRectMake(0.0f, bounds.size.height, bounds.size.width, contentsSize.height);
 	sheetView.frame = contentsBounds;
 
+	animating = YES;
 	[UIView animateWithDuration:0.3f delay:0.0f
 		options:UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionBeginFromCurrentState
 		animations:^{
@@ -119,11 +150,23 @@
 			contentsBounds.origin.y = bounds.size.height - contentsBounds.size.height;
 			sheetView.frame = contentsBounds;
 		}
-		completion:nil];
+		completion:^(BOOL) {
+			animating = NO;
+		}];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change
+	context:(void *)context
+{
+	if (object == baseView.superview && [keyPath isEqualToString:@"bounds"])
+		[self performSelectorOnMainThread:@selector(layoutSubviews) withObject:nil waitUntilDone:NO];
+	else
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
 -(void)dismissFromView
 {
+	animating = YES;
 	[UIView animateWithDuration:0.3f delay:0.0f
 		options:UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionBeginFromCurrentState
 		animations:^{
@@ -133,11 +176,30 @@
 			sheetView.frame = contentsBounds;
 		}
 		completion:^(BOOL) {
+			animating = NO;
+			[baseView.superview removeObserver:self forKeyPath:@"bounds" context:nil];
 			[baseView removeFromSuperview];
 			if (onDismiss)
 				onDismiss();
 		}
 	];
+}
+
+-(void)layoutSubviews
+{
+	if (animating)
+		return;
+
+	CGRect bounds = baseView.superview.bounds;
+	overlayView.frame = bounds;
+
+	CGSize contentsSize = [sheetView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+	CGFloat y = bounds.size.height - contentsSize.height;
+	sheetView.frame = CGRectMake(0.0f, y, bounds.size.width, contentsSize.height);
+
+	[sheetView setNeedsUpdateConstraints];
+	[sheetView setNeedsLayout];
+	[sheetView layoutIfNeeded];
 }
 
 @end

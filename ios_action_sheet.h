@@ -22,11 +22,12 @@
 //
 #import <UIKit/UIKit.h>
 
-@interface ActionSheet : UIView
+@interface ActionSheet : NSObject
 {
 	UIView * baseView;			// Base superview for all other views
 	UIView * overlayView;		// Semi-transparent view covering the entire screen
 	UIView * sheetView;			// Actual sheet view
+	BOOL animating;
 }
 @property (nonatomic, copy) void (^ onDismiss)();
 -(id)init;
@@ -34,4 +35,5 @@
 -(void)addContentsView:(UIView *)view;
 -(void)presentInView:(UIView *)view;
 -(void)dismissFromView;
+-(void)layoutSubviews;
 @end
