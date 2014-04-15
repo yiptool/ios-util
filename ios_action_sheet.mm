@@ -34,6 +34,10 @@
 		overlayView = [[UIButton alloc] initWithFrame:CGRectZero];
 		overlayView.backgroundColor = [UIColor blackColor];
 		[overlayView addTarget:self action:@selector(dismissFromView) forControlEvents:UIControlEventTouchUpInside];
+
+		baseView = [[UIView alloc] initWithFrame:CGRectZero];
+		baseView.backgroundColor = [UIColor clearColor];
+		[baseView addSubview:overlayView];
 	}
 	return self;
 }
@@ -45,6 +49,8 @@
 	[overlayView release];
 	[contentsView removeFromSuperview];
 	[contentsView release];
+	[baseView removeFromSuperview];
+	[baseView release];
 	[super dealloc];
 }
 
@@ -56,15 +62,16 @@
 	contentsView = [view retain];
 
 	if (contentsView)
-		[overlayView addSubview:contentsView];
+		[baseView addSubview:contentsView];
 }
 
 -(void)presentInView:(UIView *)view height:(CGFloat)height
 {
-	[overlayView removeFromSuperview];
-	[view addSubview:overlayView];
+	[baseView removeFromSuperview];
+	[view addSubview:baseView];
 
 	CGRect bounds = view.bounds;
+	baseView.frame = bounds;
 	overlayView.frame = bounds;
 	overlayView.alpha = 0.0f;
 
@@ -94,7 +101,7 @@
 			contentsView.frame = contentsBounds;
 		}
 		completion:^(BOOL) {
-			[overlayView removeFromSuperview];
+			[baseView removeFromSuperview];
 			if (onDismiss)
 				onDismiss();
 		}

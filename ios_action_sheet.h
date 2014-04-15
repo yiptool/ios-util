@@ -24,6 +24,7 @@
 
 @interface ActionSheet : UIView
 {
+	UIView * baseView;
 	UIButton * overlayView;
 	UIView * contentsView;
 }
