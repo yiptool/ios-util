@@ -39,6 +39,12 @@ bool IOS::UIButtonDelegate::setElementProperty(UI::Element * element, const std:
 		[button setTitle:title forState:UIControlStateNormal];
 		return true;
 	}
+	else if (name == "image")
+	{
+		UIImage * image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
+		[button setImage:image forState:UIControlStateNormal];
+		return true;
+	}
 	else if (name == "background")
 	{
 		UIImage * image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
