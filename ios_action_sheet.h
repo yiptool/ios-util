@@ -24,14 +24,14 @@
 
 @interface ActionSheet : UIView
 {
-	UIView * baseView;
-	UIButton * overlayView;
-	UIView * contentsView;
+	UIView * baseView;			// Base superview for all other views
+	UIButton * overlayView;		// Semi-transparent view covering the entire screen
+	UIView * sheetView;			// Actual sheet view
 }
 @property (nonatomic, copy) void (^ onDismiss)();
 -(id)init;
 -(void)dealloc;
--(void)setContentsView:(UIView *)view;
+-(void)addContentsView:(UIView *)view;
 -(void)presentInView:(UIView *)view height:(CGFloat)height;
 -(void)dismissFromView;
 @end

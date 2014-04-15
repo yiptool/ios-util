@@ -35,9 +35,13 @@
 		overlayView.backgroundColor = [UIColor blackColor];
 		[overlayView addTarget:self action:@selector(dismissFromView) forControlEvents:UIControlEventTouchUpInside];
 
+		sheetView = [[UIView alloc] initWithFrame:CGRectZero];
+		sheetView.backgroundColor = [UIColor whiteColor];
+
 		baseView = [[UIView alloc] initWithFrame:CGRectZero];
 		baseView.backgroundColor = [UIColor clearColor];
 		[baseView addSubview:overlayView];
+		[baseView addSubview:sheetView];
 	}
 	return self;
 }
@@ -47,22 +51,31 @@
 	self.onDismiss = nil;
 	[overlayView removeFromSuperview];
 	[overlayView release];
-	[contentsView removeFromSuperview];
-	[contentsView release];
+	[sheetView removeFromSuperview];
+	[sheetView release];
 	[baseView removeFromSuperview];
 	[baseView release];
 	[super dealloc];
 }
 
--(void)setContentsView:(UIView *)view
+-(void)addContentsView:(UIView *)view
 {
-	[contentsView removeFromSuperview];
-	[contentsView release];
+	NSLayoutConstraint * constraint;
+	if (sheetView.subviews.count == 0)
+	{
+		constraint = [NSLayoutConstraint constraintWithItem:sheetView
+			attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:view
+			attribute:NSLayoutAttributeBottom multiplier:0.0f constant:0.0f];
+	}
+	else
+	{
+		constraint = [NSLayoutConstraint constraintWithItem:sheetView.subviews.lastObject
+			attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:view
+			attribute:NSLayoutAttributeBottom multiplier:0.0f constant:0.0f];
+	}
 
-	contentsView = [view retain];
-
-	if (contentsView)
-		[baseView addSubview:contentsView];
+	[sheetView addSubview:view];
+	[sheetView addConstraint:constraint];
 }
 
 -(void)presentInView:(UIView *)view height:(CGFloat)height
@@ -76,29 +89,27 @@
 	overlayView.alpha = 0.0f;
 
 	__block CGRect contentsBounds = CGRectMake(0.0f, bounds.size.height, bounds.size.width, height);
-	contentsView.frame = contentsBounds;
+	sheetView.frame = contentsBounds;
 
 	[UIView animateWithDuration:0.3f delay:0.0f
 		options:UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionBeginFromCurrentState
 		animations:^{
 			overlayView.alpha = 0.7f;
 			contentsBounds.origin.y = bounds.size.height - contentsBounds.size.height;
-			contentsView.frame = contentsBounds;
+			sheetView.frame = contentsBounds;
 		}
 		completion:nil];
 }
 
 -(void)dismissFromView
 {
-	CGRect bounds = overlayView.superview.bounds;
-	CGRect contentsBounds = contentsView.frame;
-	contentsBounds.origin.y = bounds.size.height;
-
 	[UIView animateWithDuration:0.3f delay:0.0f
 		options:UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionBeginFromCurrentState
 		animations:^{
 			overlayView.alpha = 0.0f;
-			contentsView.frame = contentsBounds;
+			CGRect contentsBounds = sheetView.frame;
+			contentsBounds.origin.y = baseView.superview.bounds.size.height;
+			sheetView.frame = contentsBounds;
 		}
 		completion:^(BOOL) {
 			[baseView removeFromSuperview];

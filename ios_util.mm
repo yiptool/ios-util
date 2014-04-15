@@ -164,6 +164,8 @@ UIFont * iosGetFont(NSString * fontName, CGFloat sizeInPixels)
 
 void iosDisplayPicker(UIView * superview, NSArray * items, int selected, void (^callback)(int selected))
 {
+	__block ActionSheet * actionSheet = [[ActionSheet alloc] init];
+
 	SimpleUIPickerViewDelegate * delegate = [[[SimpleUIPickerViewDelegate alloc] init] autorelease];
 	delegate.items = items;
 	delegate.selectedIndex = selected;
@@ -173,9 +175,12 @@ void iosDisplayPicker(UIView * superview, NSArray * items, int selected, void (^
 	pickerView.showsSelectionIndicator = YES;
 	pickerView.backgroundColor = [UIColor whiteColor];
 	[pickerView selectRow:selected inComponent:0 animated:NO];
+	[actionSheet addContentsView:pickerView];
 
-	__block ActionSheet * actionSheet = [[ActionSheet alloc] init];
-	[actionSheet setContentsView:pickerView];
+	UIButton * okButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[okButton setTitle:@"OK" forState:UIControlStateNormal];
+	[okButton addTarget:actionSheet action:@selector(dismissFromView) forControlEvents:UIControlEventTouchUpInside];
+	[actionSheet addContentsView:okButton];
 
 	actionSheet.onDismiss = ^{
 		callback(delegate.selectedIndex);
