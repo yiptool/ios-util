@@ -171,13 +171,15 @@ void iosDisplayPicker(UIView * superview, NSArray * items, int selected, void (^
 	UIPickerView * pickerView = [[[UIPickerView alloc] initWithFrame:CGRectZero] autorelease];
 	pickerView.delegate = delegate;
 	pickerView.showsSelectionIndicator = YES;
+	pickerView.backgroundColor = [UIColor whiteColor];
 	[pickerView selectRow:selected inComponent:0 animated:NO];
 
-	ActionSheet * actionSheet = [[[ActionSheet alloc] init] autorelease];
+	__block ActionSheet * actionSheet = [[ActionSheet alloc] init];
 	[actionSheet setContentsView:pickerView];
 
 	actionSheet.onDismiss = ^{
 		callback(delegate.selectedIndex);
+		[actionSheet release];
 	};
 
 	[actionSheet presentInView:superview height:(superview.bounds.size.height * 0.33f)];

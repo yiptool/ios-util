@@ -76,7 +76,7 @@
 		animations:^{
 			overlayView.alpha = 0.7f;
 			contentsBounds.origin.y = bounds.size.height - contentsBounds.size.height;
-			contentsView.frame = bounds;
+			contentsView.frame = contentsBounds;
 		}
 		completion:nil];
 }
