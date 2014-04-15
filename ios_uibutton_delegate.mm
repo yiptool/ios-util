@@ -26,6 +26,7 @@
 IOS::UIButtonDelegate::UIButtonDelegate(UIButton * iosView)
 	: IOS::UIViewDelegate(iosView)
 {
+	iosView.imageView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 bool IOS::UIButtonDelegate::setElementProperty(UI::Element * element, const std::string & name,
