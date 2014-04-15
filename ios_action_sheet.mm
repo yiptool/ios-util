@@ -31,11 +31,11 @@
 	self = [super initWithFrame:CGRectZero];
 	if (self)
 	{
-		overlayView = [[UIButton alloc] initWithFrame:CGRectZero];
+		overlayView = [[UIView alloc] initWithFrame:CGRectZero];
 		overlayView.backgroundColor = [UIColor blackColor];
-		[overlayView addTarget:self action:@selector(dismissFromView) forControlEvents:UIControlEventTouchUpInside];
 
 		sheetView = [[UIView alloc] initWithFrame:CGRectZero];
+		sheetView.translatesAutoresizingMaskIntoConstraints = NO;
 		sheetView.backgroundColor = [UIColor whiteColor];
 
 		baseView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -60,25 +60,45 @@
 
 -(void)addContentsView:(UIView *)view
 {
+	UIView * prevView = sheetView.subviews.lastObject;
 	NSLayoutConstraint * constraint;
-	if (sheetView.subviews.count == 0)
+
+	view.translatesAutoresizingMaskIntoConstraints = NO;
+	[sheetView addSubview:view];
+
+	if (!prevView)
 	{
-		constraint = [NSLayoutConstraint constraintWithItem:sheetView
-			attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:view
-			attribute:NSLayoutAttributeBottom multiplier:0.0f constant:0.0f];
+		constraint = [NSLayoutConstraint constraintWithItem:view
+			attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:sheetView
+			attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+		[sheetView addConstraint:constraint];
 	}
 	else
 	{
-		constraint = [NSLayoutConstraint constraintWithItem:sheetView.subviews.lastObject
-			attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:view
-			attribute:NSLayoutAttributeBottom multiplier:0.0f constant:0.0f];
+		[sheetView removeConstraint:sheetView.constraints.lastObject];
+		constraint = [NSLayoutConstraint constraintWithItem:prevView
+			attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:view
+			attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+		[sheetView addConstraint:constraint];
 	}
 
-	[sheetView addSubview:view];
+	constraint = [NSLayoutConstraint constraintWithItem:view
+		attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:sheetView
+		attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
+	[sheetView addConstraint:constraint];
+
+	constraint = [NSLayoutConstraint constraintWithItem:view
+		attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:sheetView
+		attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
+	[sheetView addConstraint:constraint];
+
+	constraint = [NSLayoutConstraint constraintWithItem:view
+		attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:sheetView
+		attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
 	[sheetView addConstraint:constraint];
 }
 
--(void)presentInView:(UIView *)view height:(CGFloat)height
+-(void)presentInView:(UIView *)view
 {
 	[baseView removeFromSuperview];
 	[view addSubview:baseView];
@@ -88,7 +108,8 @@
 	overlayView.frame = bounds;
 	overlayView.alpha = 0.0f;
 
-	__block CGRect contentsBounds = CGRectMake(0.0f, bounds.size.height, bounds.size.width, height);
+	CGSize contentsSize = [sheetView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+	__block CGRect contentsBounds = CGRectMake(0.0f, bounds.size.height, bounds.size.width, contentsSize.height);
 	sheetView.frame = contentsBounds;
 
 	[UIView animateWithDuration:0.3f delay:0.0f

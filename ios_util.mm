@@ -173,11 +173,10 @@ void iosDisplayPicker(UIView * superview, NSArray * items, int selected, void (^
 	UIPickerView * pickerView = [[[UIPickerView alloc] initWithFrame:CGRectZero] autorelease];
 	pickerView.delegate = delegate;
 	pickerView.showsSelectionIndicator = YES;
-	pickerView.backgroundColor = [UIColor whiteColor];
 	[pickerView selectRow:selected inComponent:0 animated:NO];
 	[actionSheet addContentsView:pickerView];
 
-	UIButton * okButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	UIButton * okButton = [UIButton buttonWithType:UIButtonTypeSystem];
 	[okButton setTitle:@"OK" forState:UIControlStateNormal];
 	[okButton addTarget:actionSheet action:@selector(dismissFromView) forControlEvents:UIControlEventTouchUpInside];
 	[actionSheet addContentsView:okButton];
@@ -187,7 +186,7 @@ void iosDisplayPicker(UIView * superview, NSArray * items, int selected, void (^
 		[actionSheet release];
 	};
 
-	[actionSheet presentInView:superview height:(superview.bounds.size.height * 0.33f)];
+	[actionSheet presentInView:superview];
 }
 
 NSString * iosPathForResource(NSString * resource)
