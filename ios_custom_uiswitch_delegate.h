@@ -21,23 +21,8 @@
 // THE SOFTWARE.
 //
 #import "ios_uiview_delegate.h"
+#import "ios_custom_uiswitch.h"
 #import <UIKit/UIKit.h>
-
-@interface CustomUISwitch : UIControl
-{
-	BOOL animating;
-	// For touch tracking
-	BOOL initialValue;
-	BOOL valueChanged;
-}
-@property (nonatomic, readonly) BOOL value;
-@property (nonatomic, retain) UIImageView * turnedOn;
-@property (nonatomic, retain) UIImageView * turnedOff;
-@property (nonatomic, retain) UIImageView * knob;
--(id)init;
--(void)dealloc;
--(void)setValue:(BOOL)value animated:(BOOL)animated;
-@end
 
 namespace IOS
 {

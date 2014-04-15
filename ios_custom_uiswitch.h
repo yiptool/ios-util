@@ -20,26 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_delegate_factory.h"
-#import "ios_custom_uiswitch_delegate.h"
-#import "ios_uibutton_delegate.h"
-#import "ios_uilabel_delegate.h"
-#import "ios_uiimageview_delegate.h"
-#import "ios_uiview_delegate.h"
-#import <yip-imports/cxx-util/fmt.h>
+#import <UIKit/UIKit.h>
 
-UI::ElementDelegate * IOS::DelegateFactory::delegateForClass(const std::string & className) const
+@interface CustomUISwitch : UIControl
 {
-	if (className == "UIImageView")
-		return new IOS::UIImageViewDelegate([[[UIImageView alloc] initWithImage:nil] autorelease]);
-	else if (className == "UIButton")
-		return new IOS::UIButtonDelegate([UIButton buttonWithType:UIButtonTypeCustom]);
-	else if (className == "UILabel")
-		return new IOS::UILabelDelegate([[UILabel alloc] initWithFrame:CGRectZero]);
-	else if (className == "CustomUISwitch")
-		return new IOS::CustomUISwitchDelegate([[[CustomUISwitch alloc] init] autorelease]);
-	else if (className == "UIView")
-		return new IOS::UIViewDelegate([[[UIView alloc] initWithFrame:CGRectZero] autorelease]);
-
-	throw std::runtime_error(fmt() << "invalid UI element '" << className << "'.");
+	BOOL animating;
+	// For touch tracking
+	BOOL initialValue;
+	BOOL valueChanged;
 }
+@property (nonatomic, readonly) BOOL value;
+@property (nonatomic, retain) UIImageView * turnedOn;
+@property (nonatomic, retain) UIImageView * turnedOff;
+@property (nonatomic, retain) UIImageView * knob;
+-(id)init;
+-(void)dealloc;
+-(void)setValue:(BOOL)value animated:(BOOL)animated;
+@end

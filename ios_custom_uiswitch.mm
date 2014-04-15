@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_customuiswitch_delegate.h"
+#import "ios_custom_uiswitch.h"
 #import "ios_util.h"
 
 @implementation CustomUISwitch
@@ -145,39 +145,3 @@
 }
 
 @end
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-IOS::CustomUISwitchDelegate::CustomUISwitchDelegate(CustomUISwitch * iosView)
-	: IOS::UIViewDelegate(iosView)
-{
-}
-
-bool IOS::CustomUISwitchDelegate::setElementProperty(UI::Element * element, const std::string & name,
-	const std::string & val)
-{
-	CustomUISwitch * swtch = (CustomUISwitch *)m_View;
-
-	if (name == "value")
-	{
-		[swtch setValue:iosBoolFromName(val) animated:NO];
-		return true;
-	}
-	else if (name == "off_image")
-	{
-		swtch.turnedOff.image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
-		return true;
-	}
-	else if (name == "on_image")
-	{
-		swtch.turnedOn.image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
-		return true;
-	}
-	else if (name == "knob_image")
-	{
-		swtch.knob.image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
-		return true;
-	}
-
-	return UIViewDelegate::setElementProperty(element, name, val);
-}

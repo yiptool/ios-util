@@ -26,7 +26,8 @@ import strtod
 
 public_headers
 {
-	ios_customuiswitch_delegate.h
+	ios_custom_uiswitch.h
+	ios_custom_uiswitch_delegate.h
 	ios_delegate_factory.h
 	ios_scalable_font.h
 	ios_uibutton_delegate.h
@@ -38,7 +39,8 @@ public_headers
 
 sources:ios
 {
-	ios_customuiswitch_delegate.mm
+	ios_custom_uiswitch.mm
+	ios_custom_uiswitch_delegate.mm
 	ios_delegate_factory.mm
 	ios_scalable_font.mm
 	ios_uibutton_delegate.mm
