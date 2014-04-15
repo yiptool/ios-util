@@ -118,7 +118,7 @@ UIFont * iosGetFont(NSString * fontName, CGFloat sizeInPixels)
 	UIFont * lastFont = [UIFont fontWithName:fontName size:0.5f];
 
 	NSMutableDictionary * dictAttrs = [NSMutableDictionary dictionaryWithCapacity:1];
-	NSString * fontCompareString = @"Mgj^_|";
+	NSString * fontCompareString = @"M";
 
 	for (CGFloat pnt = pointStart; pnt < 1000; pnt += 0.5f)
 	{
