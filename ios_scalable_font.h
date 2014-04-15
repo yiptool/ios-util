@@ -20,52 +20,54 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_scalable_font.h"
-#import "ios_uiview_delegate.h"
 #import <UIKit/UIKit.h>
+#import <string>
 
 namespace IOS
 {
-	/** Delegate for *UILabel*. */
-	class UILabelDelegate : public UIViewDelegate
+	/** Scalable font. */
+	class ScalableFont
 	{
 	public:
-		/**
-		 * Constructor.
-		 * @param iosView Pointer to the instance of *UILabel*.
-		 */
-		UILabelDelegate(UILabel * iosView);
+		/** Constructor. */
+		ScalableFont();
+
+		/** Destructor. */
+		~ScalableFont();
 
 		/**
-		 * Sets property of the label.
-		 * @param element Pointer to the element.
+		 * Sets name of the font family.
+		 * @param val Name of the font family.
+		 */
+		void setFamily(const std::string & val);
+
+		/**
+		 * Sets size of the font.
+		 * @param val Size of the font.
+		 */
+		void setSize(const std::string & val);
+
+		/**
+		 * Sets property of the font.
 		 * @param name Name of the property.
 		 * @param val Value of the property.
-		 * @return *true* on success or *false* if element does not have such property.
+		 * @return *true* if property value has been set or *false* if there is no such property.
 		 */
-		bool setElementProperty(UI::Element * element, const std::string & name, const std::string & val) override;
+		bool setProperty(const std::string & name, const std::string & val);
 
 		/**
-		 * Sets property of the label.
-		 * @param label Pointer to the instance of *UILabel*.
-		 * @param name Name of the property.
-		 * @param val Value of the property.
-		 * @return *true* if value of the property has been set or *false* if there is no such property.
+		 * Retrieves an instance of *UIFont* for the given scale.
+		 * @param scale Scale.
+		 * @return Instance of *UIFont*.
 		 */
-		static bool setUILabelProperty(UILabel * label, const std::string & name, const std::string & val);
-
-		/**
-		 * Called when position or size of this element changes.
-		 * @param elem Pointer to the element.
-		 * @param pos New coordinates of the top left corner of this element relative to the parent element.
-		 * @param sz New size of this element.
-		 */
-		void onElementLayoutChanged(UI::Element * elem, const glm::vec2 & pos, const glm::vec2 & sz) override;
+		UIFont * getUIFontForScale(float scale) const;
 
 	private:
-		ScalableFont m_Font;
+		NSString * m_FontFamily;
+		float m_FontSize;
+		bool m_HasFontSize;
 
-		UILabelDelegate(const UILabelDelegate &) = delete;
-		UILabelDelegate & operator=(const UILabelDelegate &) = delete;
+		ScalableFont(const ScalableFont &) = delete;
+		ScalableFont & operator=(const ScalableFont &) = delete;
 	};
 }

@@ -28,17 +28,10 @@
 #import <stdexcept>
 
 IOS::UILabelDelegate::UILabelDelegate(UILabel * iosView)
-	: IOS::UIViewDelegate(iosView),
-	  m_FontFamily(nil),
-	  m_FontSize(16.0f)
+	: IOS::UIViewDelegate(iosView)
 {
 	UILabel * label = (UILabel *)m_View;
 	label.backgroundColor = [UIColor clearColor];
-}
-
-IOS::UILabelDelegate::~UILabelDelegate()
-{
-	[m_FontFamily release];
 }
 
 bool IOS::UILabelDelegate::setElementProperty(UI::Element * element, const std::string & name,
@@ -56,7 +49,17 @@ bool IOS::UILabelDelegate::setElementProperty(UI::Element * element, const std::
 		label.textColor = iosColorFromName(val);
 		return true;
 	}
-	else if (name == "fitText")
+	else if (m_Font.setProperty(name, val))
+		return true;
+	else if (setUILabelProperty(label, name, val))
+		return true;
+
+	return UIViewDelegate::setElementProperty(element, name, val);
+}
+
+bool IOS::UILabelDelegate::setUILabelProperty(UILabel * label, const std::string & name, const std::string & val)
+{
+	if (name == "fitText")
 	{
 		label.adjustsFontSizeToFitWidth = iosBoolFromName(val);
 		return true;
@@ -69,22 +72,6 @@ bool IOS::UILabelDelegate::setElementProperty(UI::Element * element, const std::
 		if (*end != 0)
 			throw std::runtime_error(fmt() << "invalid value '" << val << "' for the 'minimumScaleFactor' attribute.");
 		label.minimumScaleFactor = factor;
-		return true;
-	}
-	else if (name == "fontFamily")
-	{
-		[m_FontFamily release];
-		m_FontFamily = [[NSString stringWithUTF8String:val.c_str()] retain];
-		return true;
-	}
-	else if (name == "fontSize")
-	{
-		const char * p = val.c_str();
-		char * end = nullptr;
-		float size = static_cast<float>(p_strtod(p, &end));
-		if (*end != 0)
-			throw std::runtime_error(fmt() << "invalid value '" << val << "' for the 'fontSize' attribute.");
-		m_FontSize = size;
 		return true;
 	}
 	else if (name == "textAlign")
@@ -104,20 +91,15 @@ bool IOS::UILabelDelegate::setElementProperty(UI::Element * element, const std::
 		return true;
 	}
 
-	return UIViewDelegate::setElementProperty(element, name, val);
+	return false;
 }
 
 void IOS::UILabelDelegate::onElementLayoutChanged(UI::Element * elem, const glm::vec2 & pos, const glm::vec2 & sz)
 {
 	UIViewDelegate::onElementLayoutChanged(elem, pos, sz);
 
-	if (m_FontFamily)
-	{
-		try {
-			float scale = UI::Layout::scaleFactorForElement(elem);
-			((UILabel *)m_View).font = iosGetFont(m_FontFamily, m_FontSize * scale);
-		} catch (const std::exception & e) {
-			NSLog(@"%s", e.what());
-		}
-	}
+	float scale = UI::Layout::scaleFactorForElement(elem);
+	UIFont * font = m_Font.getUIFontForScale(scale);
+	if (font)
+		((UILabel *)m_View).font = font;
 }
