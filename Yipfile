@@ -26,6 +26,7 @@ import strtod
 
 public_headers
 {
+	ios_action_sheet.h
 	ios_custom_uiswitch.h
 	ios_custom_uiswitch_delegate.h
 	ios_delegate_factory.h
@@ -39,6 +40,7 @@ public_headers
 
 sources:ios
 {
+	ios_action_sheet.mm
 	ios_custom_uiswitch.mm
 	ios_custom_uiswitch_delegate.mm
 	ios_delegate_factory.mm
