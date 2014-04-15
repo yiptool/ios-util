@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
+#import "ios_uilabel_delegate.h"
 #import "ios_uibutton_delegate.h"
 #import "ios_util.h"
 
@@ -40,6 +41,12 @@ bool IOS::UIButtonDelegate::setElementProperty(UI::Element * element, const std:
 		[button setTitle:title forState:UIControlStateNormal];
 		return true;
 	}
+	else if (name == "textColor")
+	{
+		UIColor * color = iosColorFromName(val);
+		[button setTitleColor:color forState:UIControlStateNormal];
+		return true;
+	}
 	else if (name == "image")
 	{
 		UIImage * image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
@@ -52,6 +59,10 @@ bool IOS::UIButtonDelegate::setElementProperty(UI::Element * element, const std:
 		[button setBackgroundImage:image forState:UIControlStateNormal];
 		return true;
 	}
+	else if (m_Font.setProperty(name, val))
+		return true;
+	else if (UILabelDelegate::setUILabelProperty(button.titleLabel, name, val))
+		return true;
 
 	return UIViewDelegate::setElementProperty(element, name, val);
 }

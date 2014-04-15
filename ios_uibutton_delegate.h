@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
+#import "ios_scalable_font.h"
 #import "ios_uiview_delegate.h"
 #import <UIKit/UIKit.h>
 
@@ -43,6 +44,9 @@ namespace IOS
 		 * @return *true* on success or *false* if element does not have such property.
 		 */
 		bool setElementProperty(UI::Element * element, const std::string & name, const std::string & val) override;
+
+	private:
+		ScalableFont m_Font;
 
 		UIButtonDelegate(const UIButtonDelegate &) = delete;
 		UIButtonDelegate & operator=(const UIButtonDelegate &) = delete;
