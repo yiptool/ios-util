@@ -26,6 +26,7 @@
 IOS::UIViewDelegate::UIViewDelegate(UIView * iosView)
 	: m_View([iosView retain])
 {
+	m_View.clipsToBounds = YES;
 }
 
 IOS::UIViewDelegate::~UIViewDelegate()
