@@ -22,15 +22,8 @@
 //
 #import <UIKit/UIKit.h>
 
-@interface ActionSheet : UIView
-{
-	UIButton * overlayView;
-	UIView * contentsView;
-}
-@property (nonatomic, copy) void (^ onDismiss)();
--(id)init;
+@interface SimpleUIPickerViewDelegate : NSObject<UIPickerViewDelegate>
+@property (nonatomic, assign) int selectedIndex;
+@property (nonatomic, retain) NSArray * items;
 -(void)dealloc;
--(void)setContentsView:(UIView *)view;
--(void)presentInView:(UIView *)view height:(CGFloat)height;
--(void)dismissFromView;
 @end

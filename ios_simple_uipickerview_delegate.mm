@@ -20,17 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import <UIKit/UIKit.h>
+#import "ios_simple_uipickerview_delegate.h"
 
-@interface ActionSheet : UIView
+@implementation SimpleUIPickerViewDelegate
+
+@synthesize selectedIndex;
+@synthesize items;
+
+-(void)dealloc
 {
-	UIButton * overlayView;
-	UIView * contentsView;
+	self.items = nil;
+	[super dealloc];
 }
-@property (nonatomic, copy) void (^ onDismiss)();
--(id)init;
--(void)dealloc;
--(void)setContentsView:(UIView *)view;
--(void)presentInView:(UIView *)view height:(CGFloat)height;
--(void)dismissFromView;
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+	return items.count;
+}
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+	return 1;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+	return [items objectAtIndex:row];
+}
+
+-(CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+{
+	return 300.0f;
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+	selectedIndex = row;
+}
+
 @end

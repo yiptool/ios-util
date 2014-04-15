@@ -61,6 +61,15 @@ UIColor * iosColorFromName(const std::string & str);
 UIFont * iosGetFont(NSString * fontName, CGFloat sizeInPixels);
 
 /**
+ * Presents an action sheet with the *UIPicker* view.
+ * @param superview Superview to display action sheet in.
+ * @param items Array of items to display in the picker.
+ * @param selected Index of the selected item.
+ * @param callback Method to call when user makes a selection.
+ */
+void iosDisplayPicker(UIView * superview, NSArray * items, int selected, void (^callback)(int selected));
+
+/**
  * Determines full path to the specified resource inside the application bundle.
  * @param resource Relative path to the resource.
  * @return Full path to the result.

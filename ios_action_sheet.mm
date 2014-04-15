@@ -24,6 +24,8 @@
 
 @implementation ActionSheet
 
+@synthesize onDismiss;
+
 -(id)init
 {
 	self = [super initWithFrame:CGRectZero];
@@ -38,6 +40,7 @@
 
 -(void)dealloc
 {
+	self.onDismiss = nil;
 	[overlayView removeFromSuperview];
 	[overlayView release];
 	[contentsView removeFromSuperview];
@@ -92,6 +95,8 @@
 		}
 		completion:^(BOOL) {
 			[overlayView removeFromSuperview];
+			if (onDismiss)
+				onDismiss();
 		}
 	];
 }

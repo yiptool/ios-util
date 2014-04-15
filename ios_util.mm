@@ -21,7 +21,9 @@
 // THE SOFTWARE.
 //
 #import "ios_util.h"
+#import "ios_simple_uipickerview_delegate.h"
 #import "ios_uiview_delegate.h"
+#import "ios_action_sheet.h"
 #import <yip-imports/cxx-util/unhex.h>
 #import <yip-imports/cxx-util/fmt.h>
 #import <sstream>
@@ -158,6 +160,27 @@ UIFont * iosGetFont(NSString * fontName, CGFloat sizeInPixels)
 	}
 
 	return nil;
+}
+
+void iosDisplayPicker(UIView * superview, NSArray * items, int selected, void (^callback)(int selected))
+{
+	SimpleUIPickerViewDelegate * delegate = [[[SimpleUIPickerViewDelegate alloc] init] autorelease];
+	delegate.items = items;
+	delegate.selectedIndex = selected;
+
+	UIPickerView * pickerView = [[[UIPickerView alloc] initWithFrame:CGRectZero] autorelease];
+	pickerView.delegate = delegate;
+	pickerView.showsSelectionIndicator = YES;
+	[pickerView selectRow:selected inComponent:0 animated:NO];
+
+	ActionSheet * actionSheet = [[[ActionSheet alloc] init] autorelease];
+	[actionSheet setContentsView:pickerView];
+
+	actionSheet.onDismiss = ^{
+		callback(delegate.selectedIndex);
+	};
+
+	[actionSheet presentInView:superview height:(superview.bounds.size.height * 0.33f)];
 }
 
 NSString * iosPathForResource(NSString * resource)
