@@ -24,6 +24,8 @@ import cxx-util
 import ui-helpers
 import strtod
 
+ios:framework AudioToolbox
+
 public_headers
 {
 	ios_action_sheet.h
@@ -32,6 +34,7 @@ public_headers
 	ios_delegate_factory.h
 	ios_scalable_font.h
 	ios_simple_uipickerview_delegate.h
+	ios_system_sound.h
 	ios_uibutton_delegate.h
 	ios_uiimageview_delegate.h
 	ios_uilabel_delegate.h
@@ -47,6 +50,7 @@ sources:ios
 	ios_delegate_factory.mm
 	ios_scalable_font.mm
 	ios_simple_uipickerview_delegate.mm
+	ios_system_sound.mm
 	ios_uibutton_delegate.mm
 	ios_uiimageview_delegate.mm
 	ios_uilabel_delegate.mm
