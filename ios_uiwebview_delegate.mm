@@ -20,29 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_delegate_factory.h"
-#import "ios_custom_uiswitch_delegate.h"
-#import "ios_uibutton_delegate.h"
-#import "ios_uilabel_delegate.h"
-#import "ios_uiimageview_delegate.h"
-#import "ios_uiview_delegate.h"
 #import "ios_uiwebview_delegate.h"
+#import "ios_util.h"
 #import <yip-imports/cxx-util/fmt.h>
+#import <yip-imports/ui_layout.h>
 
-UI::ElementDelegate * IOS::DelegateFactory::delegateForClass(const std::string & className) const
+IOS::UIWebViewDelegate::UIWebViewDelegate(UIWebView * iosView)
+	: IOS::UIViewDelegate(iosView)
 {
-	if (className == "UIImageView")
-		return new IOS::UIImageViewDelegate([[[UIImageView alloc] initWithImage:nil] autorelease]);
-	else if (className == "UIButton")
-		return new IOS::UIButtonDelegate([UIButton buttonWithType:UIButtonTypeCustom]);
-	else if (className == "UILabel")
-		return new IOS::UILabelDelegate([[UILabel alloc] initWithFrame:CGRectZero]);
-	else if (className == "UIWebView")
-		return new IOS::UIWebViewDelegate([[UIWebView alloc] init]);
-	else if (className == "CustomUISwitch")
-		return new IOS::CustomUISwitchDelegate([[[CustomUISwitch alloc] init] autorelease]);
-	else if (className == "UIView")
-		return new IOS::UIViewDelegate([[[UIView alloc] initWithFrame:CGRectZero] autorelease]);
+}
 
-	throw std::runtime_error(fmt() << "invalid UI element '" << className << "'.");
+bool IOS::UIWebViewDelegate::setElementProperty(UI::Element * element, const std::string & name,
+	const std::string & val)
+{
+	UIWebView * webView = (UIWebView *)m_View;
+
+	if (name == "srcfile")
+	{
+		NSString * resource = [NSString stringWithUTF8String:val.c_str()];
+		NSString * contents = [NSString stringWithContentsOfFile:iosPathForResource(resource)
+			encoding:NSUTF8StringEncoding error:nil];
+		NSURL * baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+		[webView loadHTMLString:contents baseURL:baseURL];
+		return true;
+	}
+
+	return UIViewDelegate::setElementProperty(element, name, val);
 }

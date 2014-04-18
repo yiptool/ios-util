@@ -39,6 +39,7 @@ public_headers
 	ios_uiimageview_delegate.h
 	ios_uilabel_delegate.h
 	ios_uiview_delegate.h
+	ios_uiwebview_delegate.h
 	ios_util.h
 }
 
@@ -55,5 +56,6 @@ sources:ios
 	ios_uiimageview_delegate.mm
 	ios_uilabel_delegate.mm
 	ios_uiview_delegate.mm
+	ios_uiwebview_delegate.mm
 	ios_util.mm
 }

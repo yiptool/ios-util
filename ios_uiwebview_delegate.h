@@ -20,29 +20,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_delegate_factory.h"
-#import "ios_custom_uiswitch_delegate.h"
-#import "ios_uibutton_delegate.h"
-#import "ios_uilabel_delegate.h"
-#import "ios_uiimageview_delegate.h"
 #import "ios_uiview_delegate.h"
-#import "ios_uiwebview_delegate.h"
-#import <yip-imports/cxx-util/fmt.h>
+#import <UIKit/UIKit.h>
 
-UI::ElementDelegate * IOS::DelegateFactory::delegateForClass(const std::string & className) const
+namespace IOS
 {
-	if (className == "UIImageView")
-		return new IOS::UIImageViewDelegate([[[UIImageView alloc] initWithImage:nil] autorelease]);
-	else if (className == "UIButton")
-		return new IOS::UIButtonDelegate([UIButton buttonWithType:UIButtonTypeCustom]);
-	else if (className == "UILabel")
-		return new IOS::UILabelDelegate([[UILabel alloc] initWithFrame:CGRectZero]);
-	else if (className == "UIWebView")
-		return new IOS::UIWebViewDelegate([[UIWebView alloc] init]);
-	else if (className == "CustomUISwitch")
-		return new IOS::CustomUISwitchDelegate([[[CustomUISwitch alloc] init] autorelease]);
-	else if (className == "UIView")
-		return new IOS::UIViewDelegate([[[UIView alloc] initWithFrame:CGRectZero] autorelease]);
+	/** Delegate for *UIWebView*. */
+	class UIWebViewDelegate : public UIViewDelegate
+	{
+	public:
+		/**
+		 * Constructor.
+		 * @param iosView Pointer to the instance of *UIWebView*.
+		 */
+		UIWebViewDelegate(UIWebView * iosView);
 
-	throw std::runtime_error(fmt() << "invalid UI element '" << className << "'.");
+		/**
+		 * Sets property of the web view.
+		 * @param element Pointer to the element.
+		 * @param name Name of the property.
+		 * @param val Value of the property.
+		 * @return *true* on success or *false* if element does not have such property.
+		 */
+		bool setElementProperty(UI::Element * element, const std::string & name, const std::string & val) override;
+
+	private:
+		UIWebViewDelegate(const UIWebViewDelegate &) = delete;
+		UIWebViewDelegate & operator=(const UIWebViewDelegate &) = delete;
+	};
 }
