@@ -53,6 +53,11 @@ bool IOS::UIViewDelegate::setElementProperty(UI::Element *, const std::string & 
 		m_View.backgroundColor = iosColorFromName(val);
 		return true;
 	}
+	else if (name == "opaque")
+	{
+		m_View.opaque = iosBoolFromName(val);
+		return true;
+	}
 	else if (name == "alpha")
 	{
 		const char * p = val.c_str();
