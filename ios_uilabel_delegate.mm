@@ -98,7 +98,7 @@ void IOS::UILabelDelegate::onElementLayoutChanged(UI::Element * elem, const glm:
 {
 	UIViewDelegate::onElementLayoutChanged(elem, pos, sz);
 
-	float scale = UI::Layout::scaleFactorForElement(elem);
+	float scale = UI::Layout::scaleFactorForElement(elem, UI::Layout::PreferHeight);
 	UIFont * font = m_Font.getUIFontForScale(scale);
 	if (font)
 		((UILabel *)m_View).font = font;
