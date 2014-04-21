@@ -22,6 +22,10 @@
 //
 #import "ios_uiimageview_delegate.h"
 #import "ios_util.h"
+#import <yip-imports/strtod.h>
+#import <yip-imports/cxx-util/macros.h>
+#import <yip-imports/cxx-util/explode.h>
+#import <yip-imports/cxx-util/trim.h>
 
 IOS::UIImageViewDelegate::UIImageViewDelegate(UIImageView * iosView)
 	: IOS::UIViewDelegate(iosView)
@@ -33,7 +37,32 @@ bool IOS::UIImageViewDelegate::setElementProperty(UI::Element * element,
 {
 	if (name == "image")
 	{
-		((UIImageView *)m_View).image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
+		UIImage * image;
+
+		size_t pos = val.find('|');
+		if (pos == std::string::npos)
+			image = iosImageFromResource([NSString stringWithUTF8String:val.c_str()]);
+		else
+		{
+			std::vector<std::string> margins = explode(val.substr(pos + 1), ',');
+			if (UNLIKELY(margins.size() != 4))
+				throw std::runtime_error("invalid value for the 'image' property.");
+
+			float left, top, right, bottom;
+			if (UNLIKELY(!strToFloat(trim(margins[0]), left)))
+				throw std::runtime_error("invalid value for the 'image' property.");
+			if (UNLIKELY(!strToFloat(trim(margins[1]), top)))
+				throw std::runtime_error("invalid value for the 'image' property.");
+			if (UNLIKELY(!strToFloat(trim(margins[2]), right)))
+				throw std::runtime_error("invalid talue for the 'image' property.");
+			if (UNLIKELY(!strToFloat(trim(margins[3]), bottom)))
+				throw std::runtime_error("invalid value for the 'image' property.");
+
+			image = iosImageFromResource([NSString stringWithUTF8String:val.substr(0, pos).c_str()]);
+			image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(top, left, right, bottom)];
+		}
+
+		((UIImageView *)m_View).image = image;
 		return true;
 	}
 
