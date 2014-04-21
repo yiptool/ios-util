@@ -22,14 +22,23 @@
 //
 #import "ios_uiimageview_delegate.h"
 #import "ios_util.h"
+#import "ios_uiimage_util.h"
+#import <yip-imports/ui_layout.h>
 #import <yip-imports/strtod.h>
 #import <yip-imports/cxx-util/macros.h>
 #import <yip-imports/cxx-util/explode.h>
 #import <yip-imports/cxx-util/trim.h>
 
 IOS::UIImageViewDelegate::UIImageViewDelegate(UIImageView * iosView)
-	: IOS::UIViewDelegate(iosView)
+	: IOS::UIViewDelegate(iosView),
+	  m_Image(nil),
+	  m_HasMargins(false)
 {
+}
+
+IOS::UIImageViewDelegate::~UIImageViewDelegate()
+{
+	[m_Image release];
 }
 
 bool IOS::UIImageViewDelegate::setElementProperty(UI::Element * element,
@@ -48,23 +57,47 @@ bool IOS::UIImageViewDelegate::setElementProperty(UI::Element * element,
 			if (UNLIKELY(margins.size() != 4))
 				throw std::runtime_error("invalid value for the 'image' property.");
 
-			float left, top, right, bottom;
-			if (UNLIKELY(!strToFloat(trim(margins[0]), left)))
+			if (UNLIKELY(!strToFloat(trim(margins[0]), m_LeftMargin)))
 				throw std::runtime_error("invalid value for the 'image' property.");
-			if (UNLIKELY(!strToFloat(trim(margins[1]), top)))
+			if (UNLIKELY(!strToFloat(trim(margins[1]), m_TopMargin)))
 				throw std::runtime_error("invalid value for the 'image' property.");
-			if (UNLIKELY(!strToFloat(trim(margins[2]), right)))
+			if (UNLIKELY(!strToFloat(trim(margins[2]), m_RightMargin)))
 				throw std::runtime_error("invalid talue for the 'image' property.");
-			if (UNLIKELY(!strToFloat(trim(margins[3]), bottom)))
+			if (UNLIKELY(!strToFloat(trim(margins[3]), m_BottomMargin)))
 				throw std::runtime_error("invalid value for the 'image' property.");
 
 			image = iosImageFromResource([NSString stringWithUTF8String:val.substr(0, pos).c_str()]);
-			image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(top, left, right, bottom)];
+			m_HasMargins = true;
 		}
 
+		[m_Image release];
+		m_Image = [image retain];
+
 		((UIImageView *)m_View).image = image;
+
 		return true;
 	}
 
 	return UIViewDelegate::setElementProperty(element, name, val);
+}
+
+void IOS::UIImageViewDelegate::onElementLayoutChanged(UI::Element * elem, const glm::vec2 & pos,
+	const glm::vec2 & sz)
+{
+	UIViewDelegate::onElementLayoutChanged(elem, pos, sz);
+
+	if (!m_HasMargins)
+		return;
+
+	float scale = UI::Layout::scaleFactorForElement(elem, UI::Layout::PreferLarger);
+	CGSize newSize = CGSizeMake(m_Image.size.width * scale, m_Image.size.height * scale);
+
+	CGFloat left = m_LeftMargin * scale;
+	CGFloat top = m_TopMargin * scale;
+	CGFloat right = m_RightMargin * scale;
+	CGFloat bottom = m_BottomMargin * scale;
+	UIEdgeInsets insets = UIEdgeInsetsMake(left, top, right, bottom);
+
+	UIImage * scaledImage = [m_Image scaledToSize:newSize];
+	((UIImageView *)m_View).image = [scaledImage resizableImageWithCapInsets:insets];
 }

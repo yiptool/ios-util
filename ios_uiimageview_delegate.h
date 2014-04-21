@@ -35,6 +35,9 @@ namespace IOS
 		 */
 		UIImageViewDelegate(UIImageView * iosView);
 
+		/** Destructor. */
+		~UIImageViewDelegate();
+
 		/**
 		 * Sets property of the image view.
 		 * @param element Pointer to the element.
@@ -43,6 +46,22 @@ namespace IOS
 		 * @return *true* on success or *false* if element does not have such property.
 		 */
 		bool setElementProperty(UI::Element * element, const std::string & name, const std::string & val) override;
+
+		/**
+		 * Called when position or size of this element changes.
+		 * @param elem Pointer to the element.
+		 * @param pos New coordinates of the top left corner of this element relative to the parent element.
+		 * @param sz New size of this element.
+		 */
+		void onElementLayoutChanged(UI::Element * elem, const glm::vec2 & pos, const glm::vec2 & sz) override;
+
+	private:
+		UIImage * m_Image;
+		bool m_HasMargins;
+		float m_LeftMargin;
+		float m_TopMargin;
+		float m_RightMargin;
+		float m_BottomMargin;
 
 		UIImageViewDelegate(const UIImageViewDelegate &) = delete;
 		UIImageViewDelegate & operator=(const UIImageViewDelegate &) = delete;
