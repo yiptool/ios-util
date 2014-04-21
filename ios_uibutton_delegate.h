@@ -36,6 +36,9 @@ namespace IOS
 		 */
 		UIButtonDelegate(UIButton * iosView);
 
+		/** Destructor. */
+		~UIButtonDelegate();
+
 		/**
 		 * Sets property of the button.
 		 * @param element Pointer to the element.
@@ -55,6 +58,12 @@ namespace IOS
 
 	private:
 		ScalableFont m_Font;
+		UIImage * m_Image;
+		bool m_HasMargins;
+		float m_LeftMargin;
+		float m_TopMargin;
+		float m_RightMargin;
+		float m_BottomMargin;
 
 		UIButtonDelegate(const UIButtonDelegate &) = delete;
 		UIButtonDelegate & operator=(const UIButtonDelegate &) = delete;
