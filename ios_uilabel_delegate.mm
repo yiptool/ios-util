@@ -66,10 +66,8 @@ bool IOS::UILabelDelegate::setUILabelProperty(UILabel * label, const std::string
 	}
 	else if (name == "minimumScaleFactor")
 	{
-		const char * p = val.c_str();
-		char * end = nullptr;
-		float factor = static_cast<float>(p_strtod(p, &end));
-		if (*end != 0)
+		float factor = 0.0f;
+		if (!strToFloat(val, factor))
 			throw std::runtime_error(fmt() << "invalid value '" << val << "' for the 'minimumScaleFactor' attribute.");
 		label.minimumScaleFactor = factor;
 		return true;

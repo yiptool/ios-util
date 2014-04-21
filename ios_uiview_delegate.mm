@@ -60,10 +60,8 @@ bool IOS::UIViewDelegate::setElementProperty(UI::Element *, const std::string & 
 	}
 	else if (name == "alpha")
 	{
-		const char * p = val.c_str();
-		char * end = nullptr;
-		float alpha = static_cast<float>(p_strtod(p, &end));
-		if (*end != 0)
+		float alpha = 0.0f;
+		if (!strToFloat(val, alpha))
 			throw std::runtime_error(fmt() << "invalid value '" << val << "' for the 'alpha' attribute.");
 		m_View.alpha = alpha;
 		return true;

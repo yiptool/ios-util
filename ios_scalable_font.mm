@@ -46,11 +46,8 @@ void IOS::ScalableFont::setFamily(const std::string & val)
 
 void IOS::ScalableFont::setSize(const std::string & val)
 {
-	const char * p = val.c_str();
-	char * end = nullptr;
-	float size = static_cast<float>(p_strtod(p, &end));
-
-	if (*end != 0)
+	float size = 0.0f;
+	if (!strToFloat(val, size))
 		throw std::runtime_error(fmt() << "invalid font size '" << val << "'.");
 
 	m_FontSize = size;
