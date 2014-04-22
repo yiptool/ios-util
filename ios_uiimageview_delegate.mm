@@ -22,7 +22,7 @@
 //
 #import "ios_uiimageview_delegate.h"
 #import "ios_util.h"
-#import "ios_uiimage_util.h"
+#import "UIImage+Resize.h"
 #import <yip-imports/ui_layout.h>
 #import <yip-imports/strtod.h>
 #import <yip-imports/cxx-util/macros.h>
@@ -89,8 +89,8 @@ void IOS::UIImageViewDelegate::onElementLayoutChanged(UI::Element * elem, const 
 	if (!m_HasMargins)
 		return;
 
-	float scale = UI::Layout::scaleFactorForElement(elem, UI::Layout::PreferLarger);
-	CGSize newSize = CGSizeMake(m_Image.size.width * scale, m_Image.size.height * scale);
+	float scale = UI::Layout::scaleFactorForElement(elem, UI::Layout::PreferSmaller);
+	CGSize newSize = CGSizeMake(CGImageGetWidth(m_Image.CGImage) * scale, CGImageGetHeight(m_Image.CGImage) * scale);
 
 	CGFloat left = m_LeftMargin * scale;
 	CGFloat top = m_TopMargin * scale;
@@ -98,6 +98,6 @@ void IOS::UIImageViewDelegate::onElementLayoutChanged(UI::Element * elem, const 
 	CGFloat bottom = m_BottomMargin * scale;
 	UIEdgeInsets insets = UIEdgeInsetsMake(left, top, right, bottom);
 
-	UIImage * scaledImage = [m_Image scaledToSize:newSize];
-	((UIImageView *)m_View).image = [scaledImage resizableImageWithCapInsets:insets];
+	UIImage * scaledImage = [m_Image resizedImage:newSize interpolationQuality:kCGInterpolationHigh];
+	((UIImageView *)m_View).image = [scaledImage resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
 }

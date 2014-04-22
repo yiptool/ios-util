@@ -22,7 +22,7 @@
 //
 #import "ios_uilabel_delegate.h"
 #import "ios_uibutton_delegate.h"
-#import "ios_uiimage_util.h"
+#import "UIImage+Resize.h"
 #import "ios_util.h"
 #import <yip-imports/ui_layout.h>
 #import <yip-imports/strtod.h>
@@ -134,8 +134,8 @@ void IOS::UIButtonDelegate::onElementLayoutChanged(UI::Element * elem, const glm
 	if (!m_HasMargins)
 		return;
 
-	scale = UI::Layout::scaleFactorForElement(elem, UI::Layout::PreferLarger);
-	CGSize newSize = CGSizeMake(m_Image.size.width * scale, m_Image.size.height * scale);
+	scale = UI::Layout::scaleFactorForElement(elem, UI::Layout::PreferSmaller);
+	CGSize newSize = CGSizeMake(CGImageGetWidth(m_Image.CGImage) * scale, CGImageGetHeight(m_Image.CGImage) * scale);
 
 	CGFloat left = m_LeftMargin * scale;
 	CGFloat top = m_TopMargin * scale;
@@ -143,7 +143,7 @@ void IOS::UIButtonDelegate::onElementLayoutChanged(UI::Element * elem, const glm
 	CGFloat bottom = m_BottomMargin * scale;
 	UIEdgeInsets insets = UIEdgeInsetsMake(left, top, right, bottom);
 
-	UIImage * scaledImage = [m_Image scaledToSize:newSize];
-	scaledImage = [scaledImage resizableImageWithCapInsets:insets];
+	UIImage * scaledImage = [m_Image resizedImage:newSize interpolationQuality:kCGInterpolationHigh];
+	scaledImage = [scaledImage resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
 	[(UIButton *)m_View setBackgroundImage:scaledImage forState:UIControlStateNormal];
 }
