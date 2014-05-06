@@ -53,6 +53,12 @@ BOOL iosBoolFromName(const std::string & str);
 UIColor * iosColorFromName(const std::string & str);
 
 /**
+ * Generated globally unique identifier (UUID).
+ * @return Text representation of UUID.
+ */
+NSString * iosGenerateUUID();
+
+/**
  * Loads font as close to the given pixel size, as possible.
  * @param fontName Name of the font.
  * @param sizeInPixels Size of the font in pixels.

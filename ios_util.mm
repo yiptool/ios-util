@@ -108,6 +108,15 @@ UIColor * iosColorFromName(const std::string & str)
 	throw std::runtime_error(fmt() << "invalid color value '" << str << "'.");
 }
 
+NSString * iosGenerateUUID()
+{
+	CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
+	NSString * uuidString = (NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuid);
+	[uuidString autorelease];
+	CFRelease(uuid);
+	return uuidString;
+}
+
 UIFont * iosGetFont(NSString * fontName, CGFloat sizeInPixels)
 {
 	// Based on code from http://stackoverflow.com/questions/1059101/font-size-in-pixels
