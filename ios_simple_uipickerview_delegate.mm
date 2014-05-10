@@ -55,7 +55,7 @@
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-	selectedIndex = row;
+	selectedIndex = (int)row;
 }
 
 @end
