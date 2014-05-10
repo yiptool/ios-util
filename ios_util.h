@@ -89,6 +89,14 @@ NSString * iosPathForResource(NSString * resource);
  */
 UIImage * iosImageFromResource(NSString * resource);
 
+/**
+ * Loads the specified image from resource file.
+ * @param resource Relative path to the resource.
+ * @param scale Scale of the image.
+ * @return Instance of *UIImage*.
+ */
+UIImage * iosImageFromResourceEx(NSString * resource, CGFloat scale);
+
 #ifdef __cplusplus
 }
 #endif

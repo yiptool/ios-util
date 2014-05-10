@@ -214,6 +214,13 @@ UIImage * iosImageFromResource(NSString * resource)
 	return image;
 }
 
+UIImage * iosImageFromResourceEx(NSString * resource, CGFloat scale)
+{
+	NSString * path = iosPathForResource(resource);
+	NSData * data = [NSData dataWithContentsOfFile:path];
+	return [[[UIImage alloc] initWithData:data scale:scale] autorelease];
+}
+
 std::string iosLoadResource(NSString * resource)
 {
 	NSString * path = iosPathForResource(resource);
