@@ -37,6 +37,12 @@ extern "C" {
 #endif
 
 /**
+ * Checks whether application is running on iOS 7 or newer.
+ * @return *true* if application is running on iOS 7 or newer, *false* otherwise.
+ */
+BOOL iosIsVersion7();
+
+/**
  * Converts given text string ("yes" or "no") into BOOL.
  * @param str Text String.
  * @return Corresponding BOOL value.

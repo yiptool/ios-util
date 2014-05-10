@@ -29,6 +29,11 @@
 #import <sstream>
 #import <stdexcept>
 
+BOOL iosIsVersion7()
+{
+	return (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
+}
+
 BOOL iosBoolFromName(const std::string & str)
 {
 	if (str == "yes")
