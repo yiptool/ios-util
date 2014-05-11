@@ -35,6 +35,7 @@ public_headers
 	ios_custom_uiswitch.h
 	ios_custom_uiswitch_delegate.h
 	ios_delegate_factory.h
+	ios_network.h
 	ios_refreshing_table_view_cell.h
 	ios_scalable_font.h
 	ios_simple_uipickerview_delegate.h
@@ -45,6 +46,7 @@ public_headers
 	ios_uilabel_delegate.h
 	ios_uiview_delegate.h
 	ios_uiwebview_delegate.h
+	ios_url_image_view.h
 	ios_util.h
 }
 
@@ -57,6 +59,7 @@ sources:ios
 	ios_custom_uiswitch.mm
 	ios_custom_uiswitch_delegate.mm
 	ios_delegate_factory.mm
+	ios_network.mm
 	ios_refreshing_table_view_cell.mm
 	ios_scalable_font.mm
 	ios_simple_uipickerview_delegate.mm
@@ -67,5 +70,6 @@ sources:ios
 	ios_uilabel_delegate.mm
 	ios_uiview_delegate.mm
 	ios_uiwebview_delegate.mm
+	ios_url_image_view.mm
 	ios_util.mm
 }

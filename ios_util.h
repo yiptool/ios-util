@@ -109,6 +109,13 @@ UIImage * iosImageFromResourceEx(NSString * resource, CGFloat scale);
  */
 void iosMakeTextViewVerticallyCentered(UITextView * textView);
 
+/**
+ * Retrieves unique ID of the device.
+ * @note Due to Apple policy, this ID can change from time to time to keep user privacy.
+ * @return Unique ID of the device.
+ */
+NSString * iosGetDeviceUniqueID();
+
 #ifdef __cplusplus
 }
 #endif

@@ -248,6 +248,18 @@ void iosMakeTextViewVerticallyCentered(UITextView * textView)
 	[textView addObserver:observer forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
 }
 
+NSString * iosGetDeviceUniqueID()
+{
+	NSString * udid = [[NSUserDefaults standardUserDefaults] valueForKey:@"NikolayZapolnov:device_id"];
+	if (udid)
+	{
+		udid = [[NSUUID UUID] UUIDString];
+		[[NSUserDefaults standardUserDefaults] setObject:udid forKey:@"NikolayZapolnov:device_id"];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+	}
+	return udid;
+}
+
 std::string iosLoadResource(NSString * resource)
 {
 	NSString * path = iosPathForResource(resource);
