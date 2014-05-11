@@ -103,6 +103,12 @@ UIImage * iosImageFromResource(NSString * resource);
  */
 UIImage * iosImageFromResourceEx(NSString * resource, CGFloat scale);
 
+/**
+ * Applies a hack to make text in the specified UITextView centered vertically.
+ * @param textView Text view.
+ */
+void iosMakeTextViewVerticallyCentered(UITextView * textView);
+
 #ifdef __cplusplus
 }
 #endif

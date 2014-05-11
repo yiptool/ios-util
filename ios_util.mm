@@ -226,6 +226,28 @@ UIImage * iosImageFromResourceEx(NSString * resource, CGFloat scale)
 	return [[[UIImage alloc] initWithData:data scale:scale] autorelease];
 }
 
+@interface TextViewVerticalAlignmentObserver : NSObject
+@end
+
+@implementation TextViewVerticalAlignmentObserver
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change
+	context:(void *)context
+{
+	UITextView * textView = object;
+	CGFloat contentHeight = (iosIsVersion7()
+		? [textView sizeThatFits:CGSizeMake(textView.frame.size.width, FLT_MAX)].height
+		: textView.contentSize.height);
+	CGFloat topOffset = (textView.bounds.size.height - contentHeight * textView.zoomScale) * 0.5f;
+	textView.contentOffset = CGPointMake(0.0f, -topOffset);
+}
+@end
+
+void iosMakeTextViewVerticallyCentered(UITextView * textView)
+{
+	static TextViewVerticalAlignmentObserver * observer = [TextViewVerticalAlignmentObserver new];
+	[textView addObserver:observer forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+}
+
 std::string iosLoadResource(NSString * resource)
 {
 	NSString * path = iosPathForResource(resource);
