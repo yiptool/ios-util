@@ -35,9 +35,11 @@ public_headers
 	ios_custom_uiswitch.h
 	ios_custom_uiswitch_delegate.h
 	ios_delegate_factory.h
+	ios_refreshing_table_view_cell.h
 	ios_scalable_font.h
 	ios_simple_uipickerview_delegate.h
 	ios_system_sound.h
+	ios_top_aligned_label.h
 	ios_uibutton_delegate.h
 	ios_uiimageview_delegate.h
 	ios_uilabel_delegate.h
@@ -55,9 +57,11 @@ sources:ios
 	ios_custom_uiswitch.mm
 	ios_custom_uiswitch_delegate.mm
 	ios_delegate_factory.mm
+	ios_refreshing_table_view_cell.mm
 	ios_scalable_font.mm
 	ios_simple_uipickerview_delegate.mm
 	ios_system_sound.mm
+	ios_top_aligned_label.mm
 	ios_uibutton_delegate.mm
 	ios_uiimageview_delegate.mm
 	ios_uilabel_delegate.mm
