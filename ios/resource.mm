@@ -23,6 +23,7 @@
 #import "resource.h"
 #import <unordered_map>
 #import <string>
+#import <yip-imports/cxx-util/macros.h>
 
 static std::unordered_map<std::string, UIImage *> g_Images;
 
@@ -66,6 +67,19 @@ UIImage * iosImageFromResourceEx(NSString * resource, CGFloat scale)
 	g_Images.insert(std::make_pair(key, image));
 
 	return image;
+}
+
+void iosDisplayResourceInWebView(UIWebView * webView, NSString * resource)
+{
+	NSString * file = iosPathForResource(resource);
+
+	NSError * error = nil;
+	NSString * html = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:&error];
+	if (UNLIKELY(error))
+		NSLog(@"Unable to load resource '%@': %@", resource, error);
+
+	NSURL * baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+	[webView loadHTMLString:html baseURL:baseURL];
 }
 
 std::string iosLoadResource(NSString * resource)

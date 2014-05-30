@@ -52,6 +52,13 @@ UIImage * iosImageFromResource(NSString * resource);
  */
 UIImage * iosImageFromResourceEx(NSString * resource, CGFloat scale);
 
+/**
+ * Loads the specified HTML resource and displays its contents in the given instance of UIWebView.
+ * @param webView Instance of UIWebView.
+ * @param resource Name of the resource.
+ */
+void iosDisplayResourceInWebView(UIWebView * webView, NSString * resource);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
