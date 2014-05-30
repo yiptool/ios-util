@@ -46,7 +46,7 @@ UIFont * iosGetFont(NSString * name, float sizeInPoints)
 	if (UNLIKELY(!font))
 	{
 		NSLog(@"Unable to load font with name '%@'.", name);
-		font = [UIFont fontWithSize:sizeInPoints];
+		font = [UIFont systemFontOfSize:sizeInPoints];
 	}
 
 	[sizes setObject:font forKey:fontSize];
