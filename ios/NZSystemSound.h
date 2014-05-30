@@ -27,6 +27,7 @@
 {
 	SystemSoundID handle;
 }
++(NZSystemSound *)soundWithResource:(NSString *)resource;
 -(id)initWithResource:(NSString *)resource;
 -(void)dealloc;
 -(void)play;

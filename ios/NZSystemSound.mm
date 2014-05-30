@@ -25,6 +25,11 @@
 
 @implementation NZSystemSound
 
++(NZSystemSound *)soundWithResource:(NSString *)resource
+{
+	return [[[NZSystemSound alloc] initWithResource:resource] autorelease];
+}
+
 -(id)initWithResource:(NSString *)resource
 {
 	self = [super init];
