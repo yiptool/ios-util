@@ -20,38 +20,56 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_system_sound.h"
-#import "ios_util.h"
+#import "resource.h"
+#import <unordered_map>
+#import <string>
 
-@implementation SystemSound
+static std::unordered_map<std::string, UIImage *> g_Images;
 
--(id)initWithResource:(NSString *)resource
+@interface NZImage : UIImage
 {
-	self = [super init];
-	if (self)
-	{
-		NSString * path = iosPathForResource(resource);
-		OSStatus status = AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath:path], &handle);
-		if (status != 0)
-		{
-			NSLog(@"Unable to create system sound ID for \"%@\": %d", resource, (int)status);
-			handle = 0;
-		}
-	}
-	return self;
+	@public
+	std::string dictionaryKey;
 }
+@end
 
+@implementation NZImage
 -(void)dealloc
 {
-	if (handle != 0)
-		AudioServicesDisposeSystemSoundID(handle);
+	g_Images.erase(dictionaryKey);
 	[super dealloc];
 }
+@end
 
--(void)play
+NSString * iosPathForResource(NSString * resource)
 {
-	if (handle != 0)
-		AudioServicesPlaySystemSound(handle);
+	return [NSString stringWithFormat:@"%@/%@", [NSBundle mainBundle].resourcePath, resource];
 }
 
-@end
+UIImage * iosImageFromResource(NSString * resource)
+{
+	return iosImageFromResourceEx(resource, 2.0f);
+}
+
+UIImage * iosImageFromResourceEx(NSString * resource, CGFloat scale)
+{
+	std::string key = [resource UTF8String];
+
+	auto it = g_Images.find(key);
+	if (it != g_Images.end())
+		return [[it->second retain] autorelease];
+
+	NSData * data = [NSData dataWithContentsOfFile:iosPathForResource(resource)];
+	NZImage * image = [[[NZImage alloc] initWithData:data scale:scale] autorelease];
+
+	image->dictionaryKey = key;
+	g_Images.insert(std::make_pair(key, image));
+
+	return image;
+}
+
+std::string iosLoadResource(NSString * resource)
+{
+	NSData * data = [NSData dataWithContentsOfFile:iosPathForResource(resource)];
+	return std::string(reinterpret_cast<const char *>(data.bytes), static_cast<size_t>(data.length));
+}

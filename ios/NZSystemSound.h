@@ -20,18 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_top_aligned_label.h"
-#import <cmath>
+#import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioToolbox.h>
 
-@implementation NZTopAlignedLabel
-
--(void)drawTextInRect:(CGRect)rect
+@interface NZSystemSound : NSObject
 {
-	CGSize size = [self sizeThatFits:rect.size];
-	if (self.numberOfLines != 0)
-		size.height = MIN(size.height, self.font.lineHeight * self.numberOfLines);
-	rect.size.height = MIN(rect.size.height, size.height);
-	[super drawTextInRect:rect];
+	SystemSoundID handle;
 }
-
+-(id)initWithResource:(NSString *)resource;
+-(void)dealloc;
+-(void)play;
 @end

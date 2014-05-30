@@ -22,18 +22,23 @@
 //
 #import <UIKit/UIKit.h>
 
-@interface CustomUISwitch : UIControl
-{
-	BOOL animating;
-	// For touch tracking
-	BOOL initialValue;
-	BOOL valueChanged;
-}
-@property (nonatomic, readonly) BOOL value;
-@property (nonatomic, retain) UIImageView * turnedOn;
-@property (nonatomic, retain) UIImageView * turnedOff;
-@property (nonatomic, retain) UIImageView * knob;
--(id)init;
--(void)dealloc;
--(void)setValue:(BOOL)value animated:(BOOL)animated;
-@end
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * Generated globally unique identifier (UUID).
+ * @return Text representation of UUID.
+ */
+NSString * iosGenerateUUID();
+
+/**
+ * Retrieves unique ID of the device.
+ * @note Due to Apple policy, this ID can change from time to time to keep user privacy.
+ * @return Unique ID of the device.
+ */
+NSString * iosGetDeviceUniqueID();
+
+#ifdef __cplusplus
+} // extern "C
+#endif

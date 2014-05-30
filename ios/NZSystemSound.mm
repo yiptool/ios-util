@@ -20,30 +20,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_uiwebview_delegate.h"
-#import "ios_util.h"
-#import <yip-imports/cxx-util/fmt.h>
-#import <yip-imports/ui_layout.h>
+#import "NZSystemSound.h"
+#import "resource.h"
 
-IOS::UIWebViewDelegate::UIWebViewDelegate(UIWebView * iosView)
-	: IOS::UIViewDelegate(iosView)
+@implementation NZSystemSound
+
+-(id)initWithResource:(NSString *)resource
 {
-}
-
-bool IOS::UIWebViewDelegate::setElementProperty(UI::Element * element, const std::string & name,
-	const std::string & val)
-{
-	UIWebView * webView = (UIWebView *)m_View;
-
-	if (name == "srcfile")
+	self = [super init];
+	if (self)
 	{
-		NSString * resource = [NSString stringWithUTF8String:val.c_str()];
-		NSString * contents = [NSString stringWithContentsOfFile:iosPathForResource(resource)
-			encoding:NSUTF8StringEncoding error:nil];
-		NSURL * baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-		[webView loadHTMLString:contents baseURL:baseURL];
-		return true;
+		NSString * path = iosPathForResource(resource);
+		OSStatus status = AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath:path], &handle);
+		if (status != 0)
+		{
+			NSLog(@"Unable to create system sound ID for \"%@\": %d", resource, (int)status);
+			handle = 0;
+		}
 	}
-
-	return UIViewDelegate::setElementProperty(element, name, val);
+	return self;
 }
+
+-(void)dealloc
+{
+	if (handle != 0)
+		AudioServicesDisposeSystemSoundID(handle);
+	[super dealloc];
+}
+
+-(void)play
+{
+	if (handle != 0)
+		AudioServicesPlaySystemSound(handle);
+}
+
+@end

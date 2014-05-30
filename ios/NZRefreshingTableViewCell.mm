@@ -20,54 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import <UIKit/UIKit.h>
-#import <string>
+#import "NZRefreshingTableViewCell.h"
+#import "color.h"
 
-namespace IOS
+@implementation NZRefreshingTableViewCell
+
+@synthesize activityIndicatorView;
+
+-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-	/** Scalable font. */
-	class ScalableFont
+	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+	if (self)
 	{
-	public:
-		/** Constructor. */
-		ScalableFont();
+		self.selectionStyle = UITableViewCellSelectionStyleNone;
+		self.backgroundView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
 
-		/** Destructor. */
-		~ScalableFont();
-
-		/**
-		 * Sets name of the font family.
-		 * @param val Name of the font family.
-		 */
-		void setFamily(const std::string & val);
-
-		/**
-		 * Sets size of the font.
-		 * @param val Size of the font.
-		 */
-		void setSize(const std::string & val);
-
-		/**
-		 * Sets property of the font.
-		 * @param name Name of the property.
-		 * @param val Value of the property.
-		 * @return *true* if property value has been set or *false* if there is no such property.
-		 */
-		bool setProperty(const std::string & name, const std::string & val);
-
-		/**
-		 * Retrieves an instance of *UIFont* for the given scale.
-		 * @param scale Scale.
-		 * @return Instance of *UIFont*.
-		 */
-		UIFont * getUIFontForScale(float scale) const;
-
-	private:
-		NSString * m_FontFamily;
-		float m_FontSize;
-		bool m_HasFontSize;
-
-		ScalableFont(const ScalableFont &) = delete;
-		ScalableFont & operator=(const ScalableFont &) = delete;
-	};
+		self.activityIndicatorView = [[[UIActivityIndicatorView alloc]
+			initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
+		activityIndicatorView.frame = CGRectMake(0, 0, 320, [NZRefreshingTableViewCell height]);
+		activityIndicatorView.backgroundColor = [UIColor clearColor];
+		activityIndicatorView.color = iosColorFromName("#333333");
+		activityIndicatorView.hidesWhenStopped = NO;
+		[activityIndicatorView startAnimating];
+		[self.contentView addSubview:activityIndicatorView];
+	}
+	return self;
 }
+
+-(void)dealloc
+{
+	self.activityIndicatorView = nil;
+	[super dealloc];
+}
+
++(CGFloat)height
+{
+	return 50;
+}
+
+@end

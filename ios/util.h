@@ -20,32 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_uiview_delegate.h"
-#import "ios_custom_uiswitch.h"
 #import <UIKit/UIKit.h>
 
-namespace IOS
-{
-	/** Delegate for *CustomUISwitch*. */
-	class CustomUISwitchDelegate : public UIViewDelegate
-	{
-	public:
-		/**
-		 * Constructor.
-		 * @param iosView Pointer to the instance of *CustomUISwitch*.
-		 */
-		CustomUISwitchDelegate(CustomUISwitch * iosView);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-		/**
-		 * Sets property of the switch.
-		 * @param element Pointer to the element.
-		 * @param name Name of the property.
-		 * @param val Value of the property.
-		 * @return *true* on success or *false* if element does not have such property.
-		 */
-		bool setElementProperty(UI::Element * element, const std::string & name, const std::string & val) override;
+/**
+ * Checks whether application is running on iOS 7 or newer.
+ * @return *true* if application is running on iOS 7 or newer, *false* otherwise.
+ */
+BOOL iosIsVersion7();
 
-		CustomUISwitchDelegate(const CustomUISwitchDelegate &) = delete;
-		CustomUISwitchDelegate & operator=(const CustomUISwitchDelegate &) = delete;
-	};
-}
+#ifdef __cplusplus
+} // extern "C"
+#endif

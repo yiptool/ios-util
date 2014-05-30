@@ -22,18 +22,32 @@
 //
 #import <UIKit/UIKit.h>
 
-@interface ActionSheet : NSObject
-{
-	UIView * baseView;			// Base superview for all other views
-	UIView * overlayView;		// Semi-transparent view covering the entire screen
-	UIView * sheetView;			// Actual sheet view
-	BOOL animating;
-}
-@property (nonatomic, copy) void (^ onDismiss)();
--(id)init;
--(void)dealloc;
--(void)addContentsView:(UIView *)view;
--(void)presentInView:(UIView *)view;
--(void)dismissFromView;
--(void)layoutSubviews;
-@end
+#ifdef __cplusplus
+#import <string>
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * Converts given text string into UIColor.
+ * @param str Text string.
+ * @return Instance of UIColor.
+ * @throw std::runtime_error If *str* contains an invalid color name.
+ */
+UIColor * iosColorFromName(const char * str);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
+#ifdef __cplusplus
+/**
+ * Converts given text string into UIColor.
+ * @param str Text string.
+ * @return Instance of UIColor.
+ * @throw std::runtime_error If *str* contains an invalid color name.
+ */
+UIColor * iosColorFromName(const std::string & str);
+#endif

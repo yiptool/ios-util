@@ -2,7 +2,7 @@
 iOS util
 ========
 
-This is an Objective-C/C++11 library with helper functions and classes for
+This is an Objective-C/C++11 library with useful functions and classes for
 the iOS platform.
 
 Compiling this library

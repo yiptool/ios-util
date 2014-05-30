@@ -21,13 +21,46 @@
 // THE SOFTWARE.
 //
 #import <UIKit/UIKit.h>
-#import <AudioToolbox/AudioToolbox.h>
 
-@interface SystemSound : NSObject
-{
-	SystemSoundID handle;
-}
--(id)initWithResource:(NSString *)resource;
--(void)dealloc;
--(void)play;
-@end
+#ifdef __cplusplus
+#include <string>
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * Determines full path to the specified resource inside the application bundle.
+ * @param resource Relative path to the resource.
+ * @return Full path to the result.
+ */
+NSString * iosPathForResource(NSString * resource);
+
+/**
+ * Loads the specified image from resource file.
+ * @param resource Relative path to the resource.
+ * @return Instance of *UIImage*.
+ */
+UIImage * iosImageFromResource(NSString * resource);
+
+/**
+ * Loads the specified image from resource file.
+ * @param resource Relative path to the resource.
+ * @param scale Scale of the image.
+ * @return Instance of *UIImage*.
+ */
+UIImage * iosImageFromResourceEx(NSString * resource, CGFloat scale);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
+#ifdef __cplusplus
+/**
+ * Loads the specified resource into memory.
+ * @param resource Relative path to the resource.
+ * @return Resource data.
+ */
+std::string iosLoadResource(NSString * resource);
+#endif

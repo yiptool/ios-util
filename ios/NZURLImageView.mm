@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_url_image_view.h"
-#import "ios_network.h"
+#import "NZURLImageView.h"
+#import "network.h"
 
 @implementation NZURLImageView
 

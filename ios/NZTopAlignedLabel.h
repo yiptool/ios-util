@@ -20,42 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_refreshing_table_view_cell.h"
-#import "ios_util.h"
+#import <UIKit/UIKit.h>
 
-@implementation NZRefreshingTableViewCell
-
-@synthesize activityIndicatorView;
-
--(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-	if (self)
-	{
-		self.selectionStyle = UITableViewCellSelectionStyleNone;
-		self.backgroundView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
-
-		self.activityIndicatorView = [[[UIActivityIndicatorView alloc]
-			initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
-		activityIndicatorView.frame = CGRectMake(0, 0, 320, [NZRefreshingTableViewCell height]);
-		activityIndicatorView.backgroundColor = [UIColor clearColor];
-		activityIndicatorView.color = iosColorFromName("#333333");
-		activityIndicatorView.hidesWhenStopped = NO;
-		[activityIndicatorView startAnimating];
-		[self.contentView addSubview:activityIndicatorView];
-	}
-	return self;
-}
-
--(void)dealloc
-{
-	self.activityIndicatorView = nil;
-	[super dealloc];
-}
-
-+(CGFloat)height
-{
-	return 50;
-}
-
+@interface NZTopAlignedLabel : UILabel
 @end

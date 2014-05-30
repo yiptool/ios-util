@@ -22,6 +22,10 @@
 //
 #import <UIKit/UIKit.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Completion handler for asynchronous download.
  * @param url Original URL that has been requested.
@@ -48,17 +52,6 @@ void iosSetRequestUserAgent(NSMutableURLRequest * request);
 void iosAsyncDownload(NSString * url, NSURLRequestCachePolicy cachePolicy, NSTimeInterval timeout,
 	PFNIOSASYNCDOWNLOADHANDLERPROC handler);
 
-#ifdef __cplusplus
-
-/**
- * Asynchronously downloads the specified URL.
- * @param url URL to download.
- * @param handler Completion handler.
- */
-void iosAsyncDownload(NSString * url, PFNIOSASYNCDOWNLOADHANDLERPROC handler);
-
-#endif
-
 /**
  * Asynchronously downloads the specified URL.
  * This function invalidates any caches before downloading.
@@ -74,3 +67,16 @@ void iosAsyncDownloadForceDownload(NSString * url, PFNIOSASYNCDOWNLOADHANDLERPRO
  * @param handler Completion handler.
  */
 void iosAsyncDownloadForceCached(NSString * url, PFNIOSASYNCDOWNLOADHANDLERPROC handler);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
+#ifdef __cplusplus
+/**
+ * Asynchronously downloads the specified URL.
+ * @param url URL to download.
+ * @param handler Completion handler.
+ */
+void iosAsyncDownload(NSString * url, PFNIOSASYNCDOWNLOADHANDLERPROC handler);
+#endif

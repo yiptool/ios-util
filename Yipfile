@@ -1,5 +1,5 @@
 
-license "Helper functions and classes for the iOS platform.
+license "Useful functions and classes for the iOS platform.
 Copyright (c) 2014 Nikolay Zapolnov (zapolnov@gmail.com).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,55 +21,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE."
 
 import cxx-util
-import ui-helpers
-import strtod
 
 ios:framework AudioToolbox
 
 public_headers
 {
-	UIImage+Alpha.h
-	UIImage+Resize.h
-	UIImage+RoundedCorner.h
-	ios_action_sheet.h
-	ios_custom_uiswitch.h
-	ios_custom_uiswitch_delegate.h
-	ios_delegate_factory.h
-	ios_network.h
-	ios_refreshing_table_view_cell.h
-	ios_scalable_font.h
-	ios_simple_uipickerview_delegate.h
-	ios_system_sound.h
-	ios_top_aligned_label.h
-	ios_uibutton_delegate.h
-	ios_uiimageview_delegate.h
-	ios_uilabel_delegate.h
-	ios_uiview_delegate.h
-	ios_uiwebview_delegate.h
-	ios_url_image_view.h
-	ios_util.h
+	ios/NZRefreshingTableViewCell.h
+	ios/NZSwitchControl.h
+	ios/NZSystemSound.h
+	ios/NZTopAlignedLabel.h
+	ios/NZURLImageView.h
+	ios/UIImage+Alpha.h
+	ios/UIImage+Resize.h
+	ios/UIImage+RoundedCorner.h
+	ios/color.h
+	ios/network.h
+	ios/resource.h
+	ios/util.h
+	ios/uuid.h
 }
 
 sources:ios
 {
-	UIImage+Alpha.m
-	UIImage+Resize.m
-	UIImage+RoundedCorner.m
-	ios_action_sheet.mm
-	ios_custom_uiswitch.mm
-	ios_custom_uiswitch_delegate.mm
-	ios_delegate_factory.mm
-	ios_network.mm
-	ios_refreshing_table_view_cell.mm
-	ios_scalable_font.mm
-	ios_simple_uipickerview_delegate.mm
-	ios_system_sound.mm
-	ios_top_aligned_label.mm
-	ios_uibutton_delegate.mm
-	ios_uiimageview_delegate.mm
-	ios_uilabel_delegate.mm
-	ios_uiview_delegate.mm
-	ios_uiwebview_delegate.mm
-	ios_url_image_view.mm
-	ios_util.mm
+	ios/NZRefreshingTableViewCell.mm
+	ios/NZSwitchControl.mm
+	ios/NZSystemSound.mm
+	ios/NZTopAlignedLabel.mm
+	ios/NZURLImageView.mm
+	ios/UIImage+Alpha.m
+	ios/UIImage+Resize.m
+	ios/UIImage+RoundedCorner.m
+	ios/color.mm
+	ios/network.mm
+	ios/resource.mm
+	ios/util.m
+	ios/uuid.m
 }

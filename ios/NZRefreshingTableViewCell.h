@@ -20,32 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_uiview_delegate.h"
 #import <UIKit/UIKit.h>
 
-namespace IOS
-{
-	/** Delegate for *UIWebView*. */
-	class UIWebViewDelegate : public UIViewDelegate
-	{
-	public:
-		/**
-		 * Constructor.
-		 * @param iosView Pointer to the instance of *UIWebView*.
-		 */
-		UIWebViewDelegate(UIWebView * iosView);
-
-		/**
-		 * Sets property of the web view.
-		 * @param element Pointer to the element.
-		 * @param name Name of the property.
-		 * @param val Value of the property.
-		 * @return *true* on success or *false* if element does not have such property.
-		 */
-		bool setElementProperty(UI::Element * element, const std::string & name, const std::string & val) override;
-
-	private:
-		UIWebViewDelegate(const UIWebViewDelegate &) = delete;
-		UIWebViewDelegate & operator=(const UIWebViewDelegate &) = delete;
-	};
-}
+@interface NZRefreshingTableViewCell : UITableViewCell
+@property (nonatomic, retain) UIActivityIndicatorView * activityIndicatorView;
+-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+-(void)dealloc;
++(CGFloat)height;
+@end

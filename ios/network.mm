@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_network.h"
-#import "ios_util.h"
+#import "network.h"
+#import "uuid.h"
 
 void iosSetRequestUserAgent(NSMutableURLRequest * request)
 {

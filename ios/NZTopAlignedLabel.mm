@@ -20,13 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import <UIKit/UIKit.h>
+#import "NZTopAlignedLabel.h"
+#import <cmath>
 
-@interface NZRefreshingTableViewCell : UITableViewCell
+@implementation NZTopAlignedLabel
+
+-(void)drawTextInRect:(CGRect)rect
 {
+	CGSize size = [self sizeThatFits:rect.size];
+	if (self.numberOfLines != 0)
+		size.height = MIN(size.height, self.font.lineHeight * self.numberOfLines);
+	rect.size.height = MIN(rect.size.height, size.height);
+	[super drawTextInRect:rect];
 }
-@property (nonatomic, retain) UIActivityIndicatorView * activityIndicatorView;
--(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
--(void)dealloc;
-+(CGFloat)height;
+
 @end

@@ -20,10 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import <UIKit/UIKit.h>
+#import "util.h"
 
-@interface SimpleUIPickerViewDelegate : NSObject<UIPickerViewDelegate>
-@property (nonatomic, assign) int selectedIndex;
-@property (nonatomic, retain) NSArray * items;
--(void)dealloc;
-@end
+BOOL iosIsVersion7()
+{
+	return (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
+}

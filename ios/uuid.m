@@ -20,14 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import <yip-imports/ui_delegate_factory.h>
-#import <UIKit/UIKit.h>
+#import "uuid.h"
 
-namespace IOS
+NSString * iosGenerateUUID()
 {
-	/** Factory for iOS UI elements' delegates. */
-	class DelegateFactory : public UI::DelegateFactory
+	CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
+	NSString * uuidString = [(NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuid) autorelease];
+	CFRelease(uuid);
+	return uuidString;
+}
+
+NSString * iosGetDeviceUniqueID()
+{
+	NSString * udid = [[NSUserDefaults standardUserDefaults] valueForKey:@"NikolayZapolnov:device_id"];
+	if (udid)
 	{
-		UI::ElementDelegate * delegateForClass(const std::string & className) const override final;
-	};
+		udid = [[NSUUID UUID] UUIDString];
+		[[NSUserDefaults standardUserDefaults] setObject:udid forKey:@"NikolayZapolnov:device_id"];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+	}
+	return udid;
 }

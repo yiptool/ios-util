@@ -20,10 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "ios_custom_uiswitch.h"
-#import "ios_util.h"
+#import "NZSwitchControl.h"
+#import "util.h"
 
-@implementation CustomUISwitch
+@implementation NZSwitchControl
 
 @synthesize value;
 @synthesize turnedOn;
