@@ -35,6 +35,8 @@ public_headers
 	ios/UIImage+Resize.h
 	ios/UIImage+RoundedCorner.h
 	ios/color.h
+	ios/i18n.h
+	ios/font.h
 	ios/network.h
 	ios/resource.h
 	ios/util.h
@@ -52,6 +54,8 @@ sources:ios
 	ios/UIImage+Resize.m
 	ios/UIImage+RoundedCorner.m
 	ios/color.mm
+	ios/i18n.m
+	ios/font.m
 	ios/network.mm
 	ios/resource.mm
 	ios/util.m
