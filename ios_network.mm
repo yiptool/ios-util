@@ -78,12 +78,12 @@ void iosAsyncDownload(NSString * url, NSURLRequestCachePolicy cachePolicy, NSTim
 	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
 		completionHandler:^(NSURLResponse * response, NSData * data, NSError * error)
 		{
-			int statusCode = ([response respondsToSelector:@selector(statusCode)]
-				? [(NSHTTPURLResponse *)response statusCode] : 0);
+			long statusCode = ([response respondsToSelector:@selector(statusCode)]
+				? long([(NSHTTPURLResponse *)response statusCode]) : 0L);
 
 			if (error)
 			{
-				NSLog(@"Unable to download '%@' (status code %03d): %@", url, statusCode, error);
+				NSLog(@"Unable to download '%@' (status code %03ld): %@", url, statusCode, error);
 				dispatch_async(dispatch_get_main_queue(), ^{
 					handler(url, nil, nil, error);
 				});
@@ -91,8 +91,8 @@ void iosAsyncDownload(NSString * url, NSURLRequestCachePolicy cachePolicy, NSTim
 			else
 			{
 				long length = (long)[data length];
-				NSLog(@"Finished download of '%@' (status code %03d, %ld bytes).", url, statusCode, length);
-				if (!error && statusCode != 0 && (statusCode < 200 || statusCode >= 300))
+				NSLog(@"Finished download of '%@' (status code %03ld, %ld bytes).", url, statusCode, length);
+				if (!error && statusCode != 0L && (statusCode < 200L || statusCode >= 300L))
 					error = [NSError errorWithDomain:@"HTTPStatusCode" code:statusCode userInfo:nil];
 				dispatch_async(dispatch_get_main_queue(), ^{
 					handler(url, response, data, error);
