@@ -38,6 +38,7 @@ public_headers
 	ios/i18n.h
 	ios/font.h
 	ios/network.h
+	ios/objc_retain_ptr.h
 	ios/resource.h
 	ios/util.h
 	ios/uuid.h

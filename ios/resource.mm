@@ -24,6 +24,7 @@
 #import <unordered_map>
 #import <string>
 #import <yip-imports/cxx-util/macros.h>
+#import "objc_retain_ptr.h"
 
 static std::unordered_map<std::string, UIImage *> g_Images;
 
