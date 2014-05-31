@@ -22,6 +22,16 @@
 //
 #import "i18n.h"
 
+NSString * iosGetCurrentLanguage()
+{
+	return [[NSLocale preferredLanguages] objectAtIndex:0];
+}
+
+NSString * iosGetCurrentLanguageID()
+{
+	return [[[NSLocale preferredLanguages] objectAtIndex:0] substringToIndex:2];
+}
+
 NSString * iosChooseTranslation(NSString * def, NSDictionary * strings)
 {
 	NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];

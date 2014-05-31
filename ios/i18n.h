@@ -27,6 +27,18 @@ extern "C" {
 #endif
 
 /**
+ * Retrieves full identifier of the current user's language.
+ * @return Full identifier of the user's language.
+ */
+NSString * iosGetCurrentLanguage();
+
+/**
+ * Retrieves short identifier of the current user's language.
+ * @return Short identifier of the user's language.
+ */
+NSString * iosGetCurrentLanguageID();
+
+/**
  * Retrieves a translation in user's language for the given string from a dictionary of translations.
  * @param def Untranslated string.
  * @param strings A dictionary of translations. Key should be a language name (like `en`) and value should
