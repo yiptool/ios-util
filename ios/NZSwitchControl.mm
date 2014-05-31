@@ -25,7 +25,7 @@
 
 @implementation NZSwitchControl
 
-@synthesize value;
+@synthesize on;
 @synthesize turnedOn;
 @synthesize turnedOff;
 @synthesize knob;
@@ -49,9 +49,9 @@
 
 		turnedOn.alpha = 0.0;
 		turnedOff.alpha = 1.0;
-		value = NO;
+		on = NO;
 
-		[self calcKnobPositionForValue:value];
+		[self calcKnobPositionForValue:on];
 	}
 	return self;
 }
@@ -64,7 +64,7 @@
 	[super dealloc];
 }
 
--(void)setValue:(BOOL)val animated:(BOOL)animated
+-(void)setOn:(BOOL)val animated:(BOOL)animated
 {
 	void (^ anim)() = ^{
 		self.turnedOn.alpha = (val ? 1.0 : 0.0);
@@ -83,13 +83,13 @@
 		];
 	}
 
-	value = val;
+	on = val;
 }
 
 -(BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	[super beginTrackingWithTouch:touch withEvent:event];
-	initialValue = value;
+	initialValue = on;
 	valueChanged = NO;
 	return YES;
 }
@@ -101,13 +101,13 @@
 	CGPoint lastPoint = [touch locationInView:self];
 	if (lastPoint.x > self.bounds.size.width * 0.5)
 	{
-		[self setValue:YES animated:YES];
+		[self setOn:YES animated:YES];
 		if (!initialValue)
 			valueChanged = YES;
 	}
 	else
 	{
-		[self setValue:NO animated:YES];
+		[self setOn:NO animated:YES];
 		if (initialValue)
 			valueChanged = YES;
 	}
@@ -118,14 +118,14 @@
 -(void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	[super endTrackingWithTouch:touch withEvent:event];
-	[self setValue:(valueChanged ? value : !value) animated:YES];
+	[self setOn:(valueChanged ? on : !on) animated:YES];
 	[self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 -(void)cancelTrackingWithEvent:(UIEvent *)event
 {
 	[super cancelTrackingWithEvent:event];
-	[self setValue:value animated:YES];
+	[self setOn:on animated:YES];
 }
 
 -(void)calcKnobPositionForValue:(BOOL)val
@@ -141,7 +141,7 @@
 	self.turnedOn.frame = self.bounds;
 	self.turnedOff.frame = self.bounds;
 	if (!animating)
-		[self calcKnobPositionForValue:value];
+		[self calcKnobPositionForValue:on];
 }
 
 @end

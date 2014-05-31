@@ -29,11 +29,11 @@
 	BOOL initialValue;
 	BOOL valueChanged;
 }
-@property (nonatomic, readonly) BOOL value;
+@property (nonatomic, readonly) BOOL on;
 @property (nonatomic, retain) UIImageView * turnedOn;
 @property (nonatomic, retain) UIImageView * turnedOff;
 @property (nonatomic, retain) UIImageView * knob;
 -(id)init;
 -(void)dealloc;
--(void)setValue:(BOOL)value animated:(BOOL)animated;
+-(void)setOn:(BOOL)value animated:(BOOL)animated;
 @end
