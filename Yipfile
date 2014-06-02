@@ -36,6 +36,7 @@ public_headers
 	ios/UIImage+RoundedCorner.h
 	ios/color.h
 	ios/i18n.h
+	ios/image.h
 	ios/font.h
 	ios/network.h
 	ios/objc_retain_ptr.h
@@ -56,6 +57,7 @@ sources:ios
 	ios/UIImage+RoundedCorner.m
 	ios/color.mm
 	ios/i18n.m
+	ios/image.m
 	ios/font.m
 	ios/network.mm
 	ios/resource.mm
