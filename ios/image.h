@@ -27,6 +27,15 @@ extern "C" {
 #endif
 
 /**
+ * Scales the given image.
+ * @param image Source image.
+ * @param scaleW Scale for the width.
+ * @param scaleH Scale for the height.
+ * @returns scaled image.
+ */
+UIImage * iosScaledImage(UIImage * image, float scaleW, float scaleH);
+
+/**
  * Scales the given image and creates a resizable image with cap insets.
  * @param image Source image.
  * @param scaleW Scale for the width.

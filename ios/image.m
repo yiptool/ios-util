@@ -23,13 +23,20 @@
 #import "image.h"
 #import "UIImage+Resize.h"
 
-UIImage * iosScaledImageWithCapInsets(UIImage * image, float scaleW, float scaleH,
-	float insetLeft, float insetTop, float insetRight, float insetBottom)
+UIImage * iosScaledImage(UIImage * image, float scaleW, float scaleH)
 {
 	CGSize newSize = CGSizeMake(
 		CGImageGetWidth(image.CGImage) * scaleW,
 		CGImageGetHeight(image.CGImage) * scaleH
 	);
+
+	return [image resizedImage:newSize interpolationQuality:kCGInterpolationHigh];
+}
+
+UIImage * iosScaledImageWithCapInsets(UIImage * image, float scaleW, float scaleH,
+	float insetLeft, float insetTop, float insetRight, float insetBottom)
+{
+	UIImage * scaledImage = iosScaledImage(image, scaleW, scaleH);
 
 	UIEdgeInsets insets = UIEdgeInsetsMake(
 		insetLeft * scaleW,
@@ -38,6 +45,5 @@ UIImage * iosScaledImageWithCapInsets(UIImage * image, float scaleW, float scale
 		insetBottom * scaleH
 	);
 
-	UIImage * scaledImage = [image resizedImage:newSize interpolationQuality:kCGInterpolationHigh];
 	return [scaledImage resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
 }
