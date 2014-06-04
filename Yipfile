@@ -22,13 +22,10 @@ THE SOFTWARE."
 
 import cxx-util
 
-ios:framework AudioToolbox
-
 public_headers
 {
 	ios/NZRefreshingTableViewCell.h
 	ios/NZSwitchControl.h
-	ios/NZSystemSound.h
 	ios/NZTopAlignedLabel.h
 	ios/NZURLImageView.h
 	ios/UIImage+Alpha.h
@@ -49,7 +46,6 @@ sources:ios
 {
 	ios/NZRefreshingTableViewCell.mm
 	ios/NZSwitchControl.mm
-	ios/NZSystemSound.mm
 	ios/NZTopAlignedLabel.mm
 	ios/NZURLImageView.mm
 	ios/UIImage+Alpha.m
