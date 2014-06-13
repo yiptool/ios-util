@@ -25,6 +25,7 @@ import cxx-util
 
 public_headers
 {
+	ios/NZAlertView.h
 	ios/NZRefreshingTableViewCell.h
 	ios/NZSplashViewController.h
 	ios/NZSwitchControl.h
@@ -46,6 +47,7 @@ public_headers
 
 sources:ios
 {
+	ios/NZAlertView.m
 	ios/NZRefreshingTableViewCell.mm
 	ios/NZSplashViewController.m
 	ios/NZSwitchControl.mm
