@@ -26,11 +26,18 @@
 UIImage * iosScaledImage(UIImage * image, float scaleW, float scaleH)
 {
 	CGSize newSize = CGSizeMake(
-		CGImageGetWidth(image.CGImage) * scaleW,
-		CGImageGetHeight(image.CGImage) * scaleH
+		image.size.width * scaleW,
+		image.size.height * scaleH
 	);
 
 	return [image resizedImage:newSize interpolationQuality:kCGInterpolationHigh];
+}
+
+UIImage * iosImageWithCapInsets(UIImage * image, float insetLeft, float insetTop, float insetRight,
+	float insetBottom)
+{
+	UIEdgeInsets insets = UIEdgeInsetsMake(insetLeft, insetTop, insetRight, insetBottom);
+	return [image resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
 }
 
 UIImage * iosScaledImageWithCapInsets(UIImage * image, float scaleW, float scaleH,

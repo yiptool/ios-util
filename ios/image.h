@@ -36,6 +36,18 @@ extern "C" {
 UIImage * iosScaledImage(UIImage * image, float scaleW, float scaleH);
 
 /**
+ * Creates a resizable image with cap insets from the ginve image.
+ * @param image Source image.
+ * @param insetLeft Left cap inset.
+ * @param insetTop Top cap inset.
+ * @param insetRight Right cap inset.
+ * @param insetBottom Bottom cap inset.
+ * @returns Image with cap insets.
+ */
+UIImage * iosImageWithCapInsets(UIImage * image, float insetLeft, float insetTop, float insetRight,
+	float insetBottom);
+
+/**
  * Scales the given image and creates a resizable image with cap insets.
  * @param image Source image.
  * @param scaleW Scale for the width.
