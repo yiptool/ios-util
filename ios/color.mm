@@ -73,10 +73,10 @@ UIColor * iosColorFromName(const std::string & str)
 		}
 		else if (str.length() == 5)
 		{
-			float red = unhex(str[1]) / 15.0f;
-			float green = unhex(str[2]) / 15.0f;
-			float blue = unhex(str[3]) / 15.0f;
-			float alpha = unhex(str[4]) / 15.0f;
+			float alpha = unhex(str[1]) / 15.0f;
+			float red = unhex(str[2]) / 15.0f;
+			float green = unhex(str[3]) / 15.0f;
+			float blue = unhex(str[4]) / 15.0f;
 			return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 		}
 		else if (str.length() == 7)
@@ -88,10 +88,10 @@ UIColor * iosColorFromName(const std::string & str)
 		}
 		else if (str.length() == 9)
 		{
-			float red = unhex2(str[1], str[2]) / 255.0f;
-			float green = unhex2(str[3], str[4]) / 255.0f;
-			float blue = unhex2(str[5], str[6]) / 255.0f;
-			float alpha = unhex2(str[7], str[8]) / 255.0f;
+			float alpha = unhex2(str[1], str[2]) / 255.0f;
+			float red = unhex2(str[3], str[4]) / 255.0f;
+			float green = unhex2(str[5], str[6]) / 255.0f;
+			float blue = unhex2(str[7], str[8]) / 255.0f;
 			return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 		}
 	}
