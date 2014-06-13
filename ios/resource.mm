@@ -64,6 +64,12 @@ UIImage * iosImageFromResourceEx(NSString * resource, CGFloat scale)
 	NSData * data = [NSData dataWithContentsOfFile:iosPathForResource(resource)];
 	NZImage * image = [[[NZImage alloc] initWithData:data scale:scale] autorelease];
 
+	if (UNLIKELY(!image))
+	{
+		NSLog(@"Unable to load resource '%@'.",resource);
+		return nil;
+	}
+
 	image->dictionaryKey = key;
 	g_Images.insert(std::make_pair(key, image));
 
