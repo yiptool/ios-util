@@ -36,7 +36,7 @@ UIImage * iosScaledImage(UIImage * image, float scaleW, float scaleH)
 UIImage * iosImageWithCapInsets(UIImage * image, float insetLeft, float insetTop, float insetRight,
 	float insetBottom)
 {
-	UIEdgeInsets insets = UIEdgeInsetsMake(insetLeft, insetTop, insetRight, insetBottom);
+	UIEdgeInsets insets = UIEdgeInsetsMake(insetTop, insetLeft, insetBottom, insetRight);
 	return [image resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
 }
 
@@ -46,10 +46,10 @@ UIImage * iosScaledImageWithCapInsets(UIImage * image, float scaleW, float scale
 	UIImage * scaledImage = iosScaledImage(image, scaleW, scaleH);
 
 	UIEdgeInsets insets = UIEdgeInsetsMake(
-		insetLeft * scaleW,
 		insetTop * scaleH,
-		insetRight * scaleW,
-		insetBottom * scaleH
+		insetLeft * scaleW,
+		insetBottom * scaleH,
+		insetRight * scaleW
 	);
 
 	return [scaledImage resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
