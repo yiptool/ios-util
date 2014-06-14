@@ -25,12 +25,14 @@ import cxx-util
 
 public_headers
 {
+	ios/NSNotificationCenter+ExtraMethods.h
 	ios/NZAlertView.h
 	ios/NZRefreshingTableViewCell.h
 	ios/NZSplashViewController.h
 	ios/NZSwitchControl.h
 	ios/NZTopAlignedLabel.h
 	ios/NZURLImageView.h
+	ios/UIButton+ExtraMethods.h
 	ios/UIImage+Alpha.h
 	ios/UIImage+Resize.h
 	ios/UIImage+RoundedCorner.h
@@ -47,12 +49,14 @@ public_headers
 
 sources:ios
 {
+	ios/NSNotificationCenter+ExtraMethods.m
 	ios/NZAlertView.m
 	ios/NZRefreshingTableViewCell.mm
 	ios/NZSplashViewController.m
 	ios/NZSwitchControl.mm
 	ios/NZTopAlignedLabel.mm
 	ios/NZURLImageView.mm
+	ios/UIButton+ExtraMethods.m
 	ios/UIImage+Alpha.m
 	ios/UIImage+Resize.m
 	ios/UIImage+RoundedCorner.m
