@@ -32,10 +32,12 @@ public_headers
 	ios/NZSwitchControl.h
 	ios/NZTopAlignedLabel.h
 	ios/NZURLImageView.h
+	ios/UIBarButtonItem+ExtraMethods.h
 	ios/UIButton+ExtraMethods.h
 	ios/UIImage+Alpha.h
 	ios/UIImage+Resize.h
 	ios/UIImage+RoundedCorner.h
+	ios/UINavigationBar+ExtraMethods.h
 	ios/color.h
 	ios/i18n.h
 	ios/image.h
@@ -56,10 +58,12 @@ sources:ios
 	ios/NZSwitchControl.mm
 	ios/NZTopAlignedLabel.mm
 	ios/NZURLImageView.mm
+	ios/UIBarButtonItem+ExtraMethods.m
 	ios/UIButton+ExtraMethods.m
 	ios/UIImage+Alpha.m
 	ios/UIImage+Resize.m
 	ios/UIImage+RoundedCorner.m
+	ios/UINavigationBar+ExtraMethods.m
 	ios/color.mm
 	ios/i18n.m
 	ios/image.m
