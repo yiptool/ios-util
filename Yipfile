@@ -27,6 +27,7 @@ public_headers
 {
 	ios/NSNotificationCenter+ExtraMethods.h
 	ios/NZAlertView.h
+	ios/NZButton.h
 	ios/NZRefreshingTableViewCell.h
 	ios/NZSplashViewController.h
 	ios/NZSwitchControl.h
@@ -53,6 +54,7 @@ sources:ios
 {
 	ios/NSNotificationCenter+ExtraMethods.m
 	ios/NZAlertView.m
+	ios/NZButton.m
 	ios/NZRefreshingTableViewCell.mm
 	ios/NZSplashViewController.m
 	ios/NZSwitchControl.mm

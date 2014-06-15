@@ -20,33 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
+#import <UIKit/UIKit.h>
 #import "UIButton+ExtraMethods.h"
 
-@implementation UIButton (ExtraMethods)
-
--(void)addTarget:(id)target action:(SEL)action
-{
-	[self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
--(void)setTitle:(NSString *)title
-{
-	[self setTitle:title forState:UIControlStateNormal];
-}
-
--(void)setAttributedTitle:(NSAttributedString *)title
-{
-	[self setAttributedTitle:title forState:UIControlStateNormal];
-}
-
--(void)setImage:(UIImage *)image
-{
-	[self setImage:image forState:UIControlStateNormal];
-}
-
--(void)setBackgroundImage:(UIImage *)image
-{
-	[self setBackgroundImage:image forState:UIControlStateNormal];
-}
-
+@interface NZButton : UIButton
+@property (nonatomic, assign) BOOL imageOnRightSide;
 @end

@@ -20,33 +20,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "UIButton+ExtraMethods.h"
+#import "NZButton.h"
 
-@implementation UIButton (ExtraMethods)
-
--(void)addTarget:(id)target action:(SEL)action
+@interface NZButton ()
 {
-	[self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+	BOOL imageOnRightSide;
+}
+@end
+
+@implementation NZButton
+
+-(BOOL)imageOnRightSide
+{
+	return imageOnRightSide;
 }
 
--(void)setTitle:(NSString *)title
+-(void)setImageOnRightSide:(BOOL)flag
 {
-	[self setTitle:title forState:UIControlStateNormal];
+	if (flag != imageOnRightSide)
+	{
+		imageOnRightSide = flag;
+		[self setNeedsDisplay];
+	}
 }
 
--(void)setAttributedTitle:(NSAttributedString *)title
+
+-(CGRect)imageRectForContentRect:(CGRect)contentRect
 {
-	[self setAttributedTitle:title forState:UIControlStateNormal];
+	CGRect rect = [super imageRectForContentRect:contentRect];
+	if (imageOnRightSide)
+	{
+		rect.origin.x += [super titleRectForContentRect:contentRect].size.width;
+		rect.origin.x += self.titleEdgeInsets.left;
+	}
+	return rect;
 }
 
--(void)setImage:(UIImage *)image
+-(CGRect)titleRectForContentRect:(CGRect)contentRect
 {
-	[self setImage:image forState:UIControlStateNormal];
-}
-
--(void)setBackgroundImage:(UIImage *)image
-{
-	[self setBackgroundImage:image forState:UIControlStateNormal];
+	CGRect rect = [super titleRectForContentRect:contentRect];
+	if (imageOnRightSide)
+	{
+		rect.origin.x -= [super imageRectForContentRect:contentRect].size.width;
+		rect.origin.x -= self.imageEdgeInsets.right;
+	}
+	return rect;
 }
 
 @end
