@@ -29,6 +29,11 @@
 	[self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
+-(void)setTitle:(NSString *)title
+{
+	[self setTitle:title forState:UIControlStateNormal];
+}
+
 -(void)setBackgroundImage:(UIImage *)image
 {
 	[self setBackgroundImage:image forState:UIControlStateNormal];
