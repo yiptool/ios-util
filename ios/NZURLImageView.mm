@@ -23,6 +23,14 @@
 #import "NZURLImageView.h"
 #import "network.h"
 
+@interface NZURLImageView ()
+{
+	NSString * imageURL;
+	UIImage * placeholderImage;
+	BOOL usingPlaceholder;
+}
+@end
+
 @implementation NZURLImageView
 
 @synthesize activityIndicator;
@@ -31,7 +39,10 @@
 {
 	self = [super initWithImage:nil];
 	if (self)
+	{
 		[self commonInit];
+		usingPlaceholder = YES;
+	}
 	return self;
 }
 
@@ -39,7 +50,35 @@
 {
 	self = [super initWithImage:image];
 	if (self)
+	{
 		[self commonInit];
+		usingPlaceholder = (image == nil);
+	}
+	return self;
+}
+
+-(id)initWithImageURL:(NSString *)url
+{
+	self = [super initWithImage:nil];
+	if (self)
+	{
+		[self commonInit];
+		usingPlaceholder = YES;
+		self.imageURL = url;
+	}
+	return self;
+}
+
+-(id)initWithImageURL:(NSString *)url placeholderImage:(UIImage *)image
+{
+	self = [super initWithImage:image];
+	if (self)
+	{
+		placeholderImage = [image retain];
+		[self commonInit];
+		usingPlaceholder = YES;
+		self.imageURL = url;
+	}
 	return self;
 }
 
@@ -50,6 +89,7 @@
 	{
 		self.frame = frame;
 		[self commonInit];
+		usingPlaceholder = YES;
 	}
 	return self;
 }
@@ -66,16 +106,11 @@
 {
 	[imageURL release];
 	imageURL = nil;
+	[placeholderImage release];
+	placeholderImage = nil;
 	[activityIndicator release];
 	activityIndicator = nil;
 	[super dealloc];
-}
-
--(void)setImage:(UIImage *)image
-{
-	[imageURL release];
-	imageURL = nil;
-	[super setImage:image];
 }
 
 -(void)layoutSubviews
@@ -88,16 +123,29 @@
 	return imageURL;
 }
 
+-(UIImage *)placeholderImage
+{
+	return placeholderImage;
+}
+
+-(void)setImage:(UIImage *)image
+{
+	[imageURL release];
+	imageURL = nil;
+
+	[activityIndicator stopAnimating];
+	activityIndicator.hidden = YES;
+
+	super.image = (image ? image : placeholderImage);
+	usingPlaceholder = (image == nil);
+}
+
 -(void)setImageURL:(NSString *)url
 {
 	if (!url)
 	{
-		[imageURL release];
-		imageURL = nil;
-		imageURL = [url copy];
-		[activityIndicator stopAnimating];
-		activityIndicator.hidden = YES;
-		self.image = nil;
+		self.image = placeholderImage;
+		usingPlaceholder = YES;
 		return;
 	}
 
@@ -108,22 +156,50 @@
 	imageURL = nil;
 	imageURL = [url copy];
 
-	super.image = nil;
+	super.image = placeholderImage;
+	usingPlaceholder = YES;
+
 	activityIndicator.hidden = NO;
 	[activityIndicator startAnimating];
-	iosAsyncDownloadForceCached(url, ^(NSString * reqURL, NSURLResponse * response, NSData * data, NSError * error) {
+
+	iosAsyncDownloadForceCached(url, ^(NSString * reqURL, NSURLResponse *, NSData * data, NSError * error)
+	{
 		if (![reqURL isEqualToString:self->imageURL])
 			return;
-		[activityIndicator stopAnimating];
-		activityIndicator.hidden = YES;
+
 		if (error)
-			super.image = nil;
+		{
+			super.image = placeholderImage;
+			usingPlaceholder = YES;
+			[activityIndicator stopAnimating];
+			activityIndicator.hidden = YES;
+		}
 		else
 		{
 			CGFloat scale = [[UIScreen mainScreen] scale];
-			super.image = [UIImage imageWithData:data scale:scale];
+			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+				UIImage * image = [UIImage imageWithData:data scale:scale];
+				dispatch_async(dispatch_get_main_queue(), ^{
+					super.image = image;
+					usingPlaceholder = NO;
+					[activityIndicator stopAnimating];
+					activityIndicator.hidden = YES;
+				});
+			});
 		}
 	});
+}
+
+-(void)setPlaceholderImage:(UIImage *)image
+{
+	if (placeholderImage == image)
+		return;
+
+	[placeholderImage release];
+	placeholderImage = [image retain];
+
+	if (usingPlaceholder)
+		super.image = placeholderImage;
 }
 
 @end

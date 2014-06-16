@@ -23,13 +23,13 @@
 #import <UIKit/UIKit.h>
 
 @interface NZURLImageView : UIImageView
-{
-	NSString * imageURL;
-}
 @property (nonatomic, retain, readonly) UIActivityIndicatorView * activityIndicator;
-@property (nonatomic, retain) NSString * imageURL;
+@property (nonatomic, retain) UIImage * placeholderImage;
+@property (nonatomic, copy) NSString * imageURL;
 -(id)init;
 -(id)initWithImage:(UIImage *)image;
+-(id)initWithImageURL:(NSString *)url;
+-(id)initWithImageURL:(NSString *)url placeholderImage:(UIImage *)image;
 -(id)initWithFrame:(CGRect)frame;
 -(void)dealloc;
 @end
