@@ -40,6 +40,7 @@ public_headers
 	ios/UIImage+RoundedCorner.h
 	ios/UINavigationBar+ExtraMethods.h
 	ios/color.h
+	ios/crypto.h
 	ios/i18n.h
 	ios/image.h
 	ios/font.h
@@ -67,6 +68,7 @@ sources:ios
 	ios/UIImage+RoundedCorner.m
 	ios/UINavigationBar+ExtraMethods.m
 	ios/color.mm
+	ios/crypto.m
 	ios/i18n.m
 	ios/image.m
 	ios/font.m
