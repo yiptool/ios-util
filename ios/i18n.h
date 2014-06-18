@@ -48,6 +48,12 @@ NSString * iosGetCurrentLanguageID();
  */
 NSString * iosChooseTranslation(NSString * def, NSDictionary * strings);
 
+/**
+ * Retrieves a translation in user's language for the "Cancel" string.
+ * @return Translated string for "Cancel".
+ */
+NSString * iosTranslationForCancel();
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

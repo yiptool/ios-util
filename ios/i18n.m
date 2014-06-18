@@ -46,3 +46,10 @@ NSString * iosChooseTranslation(NSString * def, NSDictionary * strings)
 
 	return def;
 }
+
+NSString * iosTranslationForCancel()
+{
+	return iosChooseTranslation(@"Cancel", @{
+		@"ru": @"Отмена"
+	});
+}
