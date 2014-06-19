@@ -47,9 +47,23 @@ NSString * iosChooseTranslation(NSString * def, NSDictionary * strings)
 	return def;
 }
 
+NSString * iosTranslationForOk()
+{
+	return iosChooseTranslation(@"OK", @{
+		@"ru": @"ОК"
+	});
+}
+
 NSString * iosTranslationForCancel()
 {
 	return iosChooseTranslation(@"Cancel", @{
 		@"ru": @"Отмена"
+	});
+}
+
+NSString * iosTranslationForError()
+{
+	return iosChooseTranslation(@"Error", @{
+		@"ru": @"Ошибка"
 	});
 }

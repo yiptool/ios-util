@@ -49,10 +49,22 @@ NSString * iosGetCurrentLanguageID();
 NSString * iosChooseTranslation(NSString * def, NSDictionary * strings);
 
 /**
+ * Retrieves a translation in user's language for the "OK" string.
+ * @return Translated string for "OK".
+ */
+NSString * iosTranslationForOk();
+
+/**
  * Retrieves a translation in user's language for the "Cancel" string.
  * @return Translated string for "Cancel".
  */
 NSString * iosTranslationForCancel();
+
+/**
+ * Retrieves a translation in user's language for the "Error" string.
+ * @return Translated string for "Error".
+ */
+NSString * iosTranslationForError();
 
 #ifdef __cplusplus
 } // extern "C"
