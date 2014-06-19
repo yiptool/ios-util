@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 //
 #import "NZAlertView.h"
+#import <yip-imports/ios/i18n.h>
 #import <stdarg.h>
 
 @interface NZAlertView ()
@@ -62,6 +63,19 @@
 	return self;
 }
 
++(id)withTitle:(NSString *)title message:(NSString *)message
+{
+	return [[[NZAlertView alloc] initWithTitle:title message:message delegate:nil
+		cancelButtonTitle:iosTranslationForOk() otherButtonTitles:nil] autorelease];
+}
+
++(id)withTitle:(NSString *)title message:(NSString *)message onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler
+{
+	NZAlertView * alertView = [NZAlertView withTitle:title message:message];
+	alertView.onDismiss = handler;
+	return alertView;
+}
+
 +(id)withTitle:(NSString *)title message:(NSString *)message button:(NSString *)btnTitle
 {
 	return [[[NZAlertView alloc] initWithTitle:title message:message delegate:nil
@@ -89,6 +103,64 @@
 	NZAlertView * alertView = [NZAlertView withTitle:title message:message firstButton:btnTitle1
 		secondButton:btnTitle2];
 	alertView.onDismiss2 = handler;
+	return alertView;
+}
+
++(id)withErrorMessage:(NSString *)message
+{
+	return [[[NZAlertView alloc] initWithTitle:iosTranslationForError() message:message delegate:nil
+		cancelButtonTitle:iosTranslationForOk() otherButtonTitles:nil] autorelease];
+}
+
++(id)withErrorMessage:(NSString *)message onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler
+{
+	NZAlertView * alertView = [[[NZAlertView alloc] initWithTitle:iosTranslationForError() message:message
+		delegate:nil cancelButtonTitle:iosTranslationForOk() otherButtonTitles:nil] autorelease];
+	alertView.onDismiss = handler;
+	return alertView;
+}
+
++(id)withErrorMessage:(NSString *)message button:(NSString *)btnTitle
+{
+	return [[[NZAlertView alloc] initWithTitle:iosTranslationForError() message:message
+		delegate:nil cancelButtonTitle:btnTitle otherButtonTitles:nil] autorelease];
+}
+
++(id)withErrorMessage:(NSString *)message button:(NSString *)btnTitle onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler
+{
+	NZAlertView * alertView = [[[NZAlertView alloc] initWithTitle:iosTranslationForError() message:message
+		delegate:nil cancelButtonTitle:btnTitle otherButtonTitles:nil] autorelease];
+	alertView.onDismiss = handler;
+	return alertView;
+}
+
++(id)withErrorMessage:(NSString *)message firstButton:(NSString *)btnTitle1 secondButton:(NSString *)btnTitle2
+{
+	return [[[NZAlertView alloc] initWithTitle:iosTranslationForError() message:message
+		delegate:nil cancelButtonTitle:btnTitle1 otherButtonTitles:btnTitle2, nil] autorelease];
+}
+
++(id)withErrorMessage:(NSString *)message firstButton:(NSString *)btnTitle1 secondButton:(NSString *)btnTitle2
+	onDismiss:(PFNALERTVIEWDISMISSED2PROC)handler
+{
+	NZAlertView * alertView = [[[NZAlertView alloc] initWithTitle:iosTranslationForError() message:message
+		delegate:nil cancelButtonTitle:btnTitle1 otherButtonTitles:btnTitle2, nil] autorelease];
+	alertView.onDismiss2 = handler;
+	return alertView;
+}
+
++(id)showWithTitle:(NSString *)title message:(NSString *)message
+{
+	NZAlertView * alertView = [NZAlertView withTitle:title message:message button:iosTranslationForOk()];
+	[alertView show];
+	return alertView;
+}
+
++(id)showWithTitle:(NSString *)title message:(NSString *)message onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler
+{
+	NZAlertView * alertView = [NZAlertView withTitle:title message:message button:iosTranslationForOk()
+		onDismiss:handler];
+	[alertView show];
 	return alertView;
 }
 
@@ -121,6 +193,51 @@
 {
 	NZAlertView * alertView = [NZAlertView withTitle:title message:message firstButton:btnTitle1
 		secondButton:btnTitle2 onDismiss:handler];
+	[alertView show];
+	return alertView;
+}
+
++(id)showWithErrorMessage:(NSString *)message
+{
+	NZAlertView * alertView = [NZAlertView withErrorMessage:message];
+	[alertView show];
+	return alertView;
+}
+
++(id)showWithErrorMessage:(NSString *)message onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler
+{
+	NZAlertView * alertView = [NZAlertView withErrorMessage:message onDismiss:handler];
+	[alertView show];
+	return alertView;
+}
+
++(id)showWithErrorMessage:(NSString *)message button:(NSString *)btnTitle
+{
+	NZAlertView * alertView = [NZAlertView withErrorMessage:message button:btnTitle];
+	[alertView show];
+	return alertView;
+}
+
++(id)showWithErrorMessage:(NSString *)message button:(NSString *)btnTitle
+	onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler
+{
+	NZAlertView * alertView = [NZAlertView withErrorMessage:message button:btnTitle onDismiss:handler];
+	[alertView show];
+	return alertView;
+}
+
++(id)showWithErrorMessage:(NSString *)message firstButton:(NSString *)btnTitle1 secondButton:(NSString *)btnTitle2
+{
+	NZAlertView * alertView = [NZAlertView withErrorMessage:message firstButton:btnTitle1 secondButton:btnTitle2];
+	[alertView show];
+	return alertView;
+}
+
++(id)showWithErrorMessage:(NSString *)message firstButton:(NSString *)btnTitle1 secondButton:(NSString *)btnTitle2
+	onDismiss:(PFNALERTVIEWDISMISSED2PROC)handler
+{
+	NZAlertView * alertView = [NZAlertView withErrorMessage:message firstButton:btnTitle1 secondButton:btnTitle2
+		onDismiss:handler];
 	[alertView show];
 	return alertView;
 }

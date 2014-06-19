@@ -30,6 +30,8 @@ typedef void (^ PFNALERTVIEWDISMISSED2PROC)(NSInteger buttonIndex);
 @property (nonatomic, copy) PFNALERTVIEWDISMISSED2PROC onDismiss2;
 -(id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate
 	cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...;
++(id)withTitle:(NSString *)title message:(NSString *)message;
++(id)withTitle:(NSString *)title message:(NSString *)message onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler;
 +(id)withTitle:(NSString *)title message:(NSString *)message button:(NSString *)btnTitle;
 +(id)withTitle:(NSString *)title message:(NSString *)message button:(NSString *)btnTitle
 	onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler;
@@ -37,6 +39,15 @@ typedef void (^ PFNALERTVIEWDISMISSED2PROC)(NSInteger buttonIndex);
 	secondButton:(NSString *)btnTitle2;
 +(id)withTitle:(NSString *)title message:(NSString *)message firstButton:(NSString *)btnTitle1
 	secondButton:(NSString *)btnTitle2 onDismiss:(PFNALERTVIEWDISMISSED2PROC)handler;
++(id)withErrorMessage:(NSString *)message;
++(id)withErrorMessage:(NSString *)message onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler;
++(id)withErrorMessage:(NSString *)message button:(NSString *)btnTitle;
++(id)withErrorMessage:(NSString *)message button:(NSString *)btnTitle onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler;
++(id)withErrorMessage:(NSString *)message firstButton:(NSString *)btnTitle1 secondButton:(NSString *)btnTitle2;
++(id)withErrorMessage:(NSString *)message firstButton:(NSString *)btnTitle1 secondButton:(NSString *)btnTitle2
+	onDismiss:(PFNALERTVIEWDISMISSED2PROC)handler;
++(id)showWithTitle:(NSString *)title message:(NSString *)message;
++(id)showWithTitle:(NSString *)title message:(NSString *)message onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler;
 +(id)showWithTitle:(NSString *)title message:(NSString *)message button:(NSString *)btnTitle;
 +(id)showWithTitle:(NSString *)title message:(NSString *)message button:(NSString *)btnTitle
 	onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler;
@@ -44,6 +55,14 @@ typedef void (^ PFNALERTVIEWDISMISSED2PROC)(NSInteger buttonIndex);
 	secondButton:(NSString *)btnTitle2;
 +(id)showWithTitle:(NSString *)title message:(NSString *)message firstButton:(NSString *)btnTitle1
 	secondButton:(NSString *)btnTitle2 onDismiss:(PFNALERTVIEWDISMISSED2PROC)handler;
++(id)showWithErrorMessage:(NSString *)message;
++(id)showWithErrorMessage:(NSString *)message onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler;
++(id)showWithErrorMessage:(NSString *)message button:(NSString *)btnTitle;
++(id)showWithErrorMessage:(NSString *)message button:(NSString *)btnTitle
+	onDismiss:(PFNALERTVIEWDISMISSEDPROC)handler;
++(id)showWithErrorMessage:(NSString *)message firstButton:(NSString *)btnTitle1 secondButton:(NSString *)btnTitle2;
++(id)showWithErrorMessage:(NSString *)message firstButton:(NSString *)btnTitle1 secondButton:(NSString *)btnTitle2
+	onDismiss:(PFNALERTVIEWDISMISSED2PROC)handler;
 -(void)dealloc;
 -(id)delegate;
 -(void)setDelegate:(id)delegate;
