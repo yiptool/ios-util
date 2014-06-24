@@ -44,7 +44,6 @@
 	}
 }
 
-
 -(CGRect)imageRectForContentRect:(CGRect)contentRect
 {
 	CGRect rect = [super imageRectForContentRect:contentRect];
