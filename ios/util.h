@@ -32,6 +32,12 @@ extern "C" {
  */
 BOOL iosIsVersion7();
 
+/**
+ * Retrieves the current topmost view controller.
+ * @return Current topmost view controller.
+ */
+UIViewController * iosTopmostViewController();
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

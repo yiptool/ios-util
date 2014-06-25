@@ -26,3 +26,14 @@ BOOL iosIsVersion7()
 {
 	return (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
 }
+
+UIViewController * iosTopmostViewController()
+{
+	UIWindow * window = [UIApplication sharedApplication].keyWindow;
+
+	UIViewController * topmostViewController = window.rootViewController;
+	while (topmostViewController.presentedViewController)
+		topmostViewController = topmostViewController.presentedViewController;
+
+	return topmostViewController;
+}
