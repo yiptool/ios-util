@@ -61,6 +61,13 @@ UIImage * iosImageWithCapInsets(UIImage * image, float insetLeft, float insetTop
 UIImage * iosScaledImageWithCapInsets(UIImage * image, float scaleW, float scaleH,
 	float insetLeft, float insetTop, float insetRight, float insetBottom);
 
+/**
+ * Asynchronously downloads image from the specified URL.
+ * @param url URL.
+ * @param callback Callback to invoke when operation completes or fails.
+ */
+void iosAsyncDownloadImage(NSString * url, void (^ callback)(UIImage * image));
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

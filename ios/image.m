@@ -62,3 +62,29 @@ UIImage * iosScaledImageWithCapInsets(UIImage * image, float scaleW, float scale
 
 	return [scaledImage resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
 }
+
+void iosAsyncDownloadImage(NSString * url, void (^ callback)(UIImage * image))
+{
+	NSURL * imageURL = [NSURL URLWithString:url];
+	NSURLRequest * request = [NSURLRequest requestWithURL:imageURL];
+	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
+		completionHandler:^(NSURLResponse * response, NSData * data, NSError * error)
+	{
+		if (error || !data)
+		{
+			NSLog(@"Unable to download '%@': %@", url, error);
+			if (callback)
+				callback(nil);
+			return;
+		}
+
+		CGFloat scale = [[UIScreen mainScreen] scale];
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			UIImage * image = [UIImage imageWithData:data scale:scale];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				if (callback)
+					callback(image);
+			});
+		});
+	}];
+}
