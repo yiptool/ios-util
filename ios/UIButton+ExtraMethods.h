@@ -26,6 +26,7 @@
 -(void)addTarget:(id)target action:(SEL)action;
 -(void)setTitle:(NSString *)title;
 -(void)setAttributedTitle:(NSAttributedString *)title;
+-(void)setTitleColor:(UIColor *)color;
 -(void)setImage:(UIImage *)image;
 -(void)setBackgroundImage:(UIImage *)image;
 @end

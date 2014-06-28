@@ -39,6 +39,11 @@
 	[self setAttributedTitle:title forState:UIControlStateNormal];
 }
 
+-(void)setTitleColor:(UIColor *)color
+{
+	[self setTitleColor:color forState:UIControlStateNormal];
+}
+
 -(void)setImage:(UIImage *)image
 {
 	[self setImage:image forState:UIControlStateNormal];
