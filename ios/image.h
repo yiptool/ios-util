@@ -68,6 +68,13 @@ UIImage * iosScaledImageWithCapInsets(UIImage * image, float scaleW, float scale
  */
 void iosAsyncDownloadImage(NSString * url, void (^ callback)(UIImage * image));
 
+/**
+ * Asynchronously decodes given image data.
+ * @param data Image data.
+ * @param callback Callback to invoke when operation completes or fails.
+ */
+void iosAsyncDecodeImage(NSData * data, void (^ callback)(UIImage * image));
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

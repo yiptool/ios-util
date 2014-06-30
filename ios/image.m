@@ -78,13 +78,18 @@ void iosAsyncDownloadImage(NSString * url, void (^ callback)(UIImage * image))
 			return;
 		}
 
-		CGFloat scale = [[UIScreen mainScreen] scale];
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			UIImage * image = [UIImage imageWithData:data scale:scale];
-			dispatch_async(dispatch_get_main_queue(), ^{
-				if (callback)
-					callback(image);
-			});
-		});
+		iosAsyncDecodeImage(data, callback);
 	}];
+}
+
+void iosAsyncDecodeImage(NSData * data, void (^ callback)(UIImage * image))
+{
+	CGFloat scale = [[UIScreen mainScreen] scale];
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		UIImage * image = [UIImage imageWithData:data scale:scale];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			if (callback)
+				callback(image);
+		});
+	});
 }
