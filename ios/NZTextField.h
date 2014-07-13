@@ -20,47 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#import "NZButton.h"
+#import <UIKit/UIKit.h>
 
-@implementation NZButton
-{
-	BOOL imageOnRightSide;
-}
-
--(BOOL)imageOnRightSide
-{
-	return imageOnRightSide;
-}
-
--(void)setImageOnRightSide:(BOOL)flag
-{
-	if (flag != imageOnRightSide)
-	{
-		imageOnRightSide = flag;
-		[self setNeedsDisplay];
-	}
-}
-
--(CGRect)imageRectForContentRect:(CGRect)contentRect
-{
-	CGRect rect = [super imageRectForContentRect:contentRect];
-	if (imageOnRightSide)
-	{
-		rect.origin.x += [super titleRectForContentRect:contentRect].size.width;
-		rect.origin.x += self.titleEdgeInsets.left;
-	}
-	return rect;
-}
-
--(CGRect)titleRectForContentRect:(CGRect)contentRect
-{
-	CGRect rect = [super titleRectForContentRect:contentRect];
-	if (imageOnRightSide)
-	{
-		rect.origin.x -= [super imageRectForContentRect:contentRect].size.width;
-		rect.origin.x -= self.imageEdgeInsets.right;
-	}
-	return rect;
-}
-
+@interface NZTextField : UITextField
+@property (nonatomic, assign) BOOL attachRightViewToText;
+@property (nonatomic, assign) CGFloat rightViewLeftMargin;
 @end

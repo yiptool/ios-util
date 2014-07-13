@@ -33,6 +33,7 @@ public_headers
 	ios/NZRefreshingTableViewCell.h
 	ios/NZSplashViewController.h
 	ios/NZSwitchControl.h
+	ios/NZTextField.h
 	ios/NZTopAlignedLabel.h
 	ios/NZURLImageView.h
 	ios/UIBarButtonItem+ExtraMethods.h
@@ -63,6 +64,7 @@ sources:ios
 	ios/NZRefreshingTableViewCell.mm
 	ios/NZSplashViewController.m
 	ios/NZSwitchControl.mm
+	ios/NZTextField.mm
 	ios/NZTopAlignedLabel.mm
 	ios/NZURLImageView.mm
 	ios/UIBarButtonItem+ExtraMethods.m
