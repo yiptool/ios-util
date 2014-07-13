@@ -33,7 +33,10 @@
 {
 	navigationBarWasHidden = self.navigationController.navigationBarHidden;
 	if (navigationBarWasHidden != navigationBarHidden)
+	{
 		[self.navigationController setNavigationBarHidden:navigationBarHidden animated:animated];
+		[self.view setNeedsLayout];
+	}
 	[super viewWillAppear:animated];
 }
 
