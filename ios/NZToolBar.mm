@@ -60,6 +60,11 @@
 	buttons.push_back(button);
 }
 
+-(UIButton *)buttonWithIndex:(int)index
+{
+	return buttons[index];
+}
+
 -(void)setImage:(UIImage *)image forButton:(int)index
 {
 	buttons[index].image = image;

@@ -25,5 +25,6 @@
 @interface NZToolBar : UIView
 @property (nonatomic, retain) UIImage * separatorImage;
 -(void)addButton:(UIImage *)image withTarget:(id)target action:(SEL)action;
+-(UIButton *)buttonWithIndex:(int)index;
 -(void)setImage:(UIImage *)image forButton:(int)index;
 @end
