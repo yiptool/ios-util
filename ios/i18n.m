@@ -67,3 +67,17 @@ NSString * iosTranslationForError()
 		@"ru": @"Ошибка"
 	});
 }
+
+NSString * iosTranslationForTakePhoto()
+{
+	return iosChooseTranslation(@"Take Photo", @{
+		@"ru": @"Новое фото"
+	});
+}
+
+NSString * iosTranslationForBrowseGallery()
+{
+	return iosChooseTranslation(@"Browse Gallery", @{
+		@"ru": @"Фото из галереи"
+	});
+}

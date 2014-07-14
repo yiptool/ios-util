@@ -66,6 +66,18 @@ NSString * iosTranslationForCancel();
  */
 NSString * iosTranslationForError();
 
+/**
+ * Retrieves a translation in user's language for the "Take Photo" string.
+ * @return Translated string for "Take Photo".
+ */
+NSString * iosTranslationForTakePhoto();
+
+/**
+ * Retrieves a translation in user's language for the "Browse Gallery" string.
+ * @return Translated string for "Browse Gallery".
+ */
+NSString * iosTranslationForBrowseGallery();
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

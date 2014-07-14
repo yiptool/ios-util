@@ -43,6 +43,7 @@ public_headers
 	ios/UIImage+Resize.h
 	ios/UIImage+RoundedCorner.h
 	ios/UINavigationBar+ExtraMethods.h
+	ios/camera.h
 	ios/color.h
 	ios/crypto.h
 	ios/i18n.h
@@ -75,6 +76,7 @@ sources:ios
 	ios/UIImage+Resize.m
 	ios/UIImage+RoundedCorner.m
 	ios/UINavigationBar+ExtraMethods.m
+	ios/camera.mm
 	ios/color.mm
 	ios/crypto.m
 	ios/i18n.m
